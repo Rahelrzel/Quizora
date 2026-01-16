@@ -24,7 +24,15 @@ app.use(
 //app.use(helmet());
 app.use(morgan("dev"));
 
+app.use((req, res, next) => {
+  console.log(`[DEBUG] ${req.method} ${req.url}`);
+  next();
+});
+
 app.use("/api/auth", authRoutes);
+app.use("/api/categories", require("./routes/category.routes"));
+app.use("/api/quizzes", require("./routes/quiz.routes"));
+app.use("/api/courses", require("./routes/course.routes"));
 
 app.get("/", (req, res) => {
   res.send("API is running...");
