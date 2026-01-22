@@ -13,13 +13,19 @@ connectDB();
 
 const app = express();
 
-app.use(express.json());
+app.use(
+  express.json({
+    verify: (req, res, buf) => {
+      req.rawBody = buf;
+    },
+  }),
+);
 app.use(
   cors({
     origin: "*", // allow all origins for testing
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-  })
+  }),
 );
 //app.use(helmet());
 app.use(morgan("dev"));
@@ -33,6 +39,8 @@ app.use("/api/auth", authRoutes);
 app.use("/api/categories", require("./routes/category.routes"));
 app.use("/api/quizzes", require("./routes/quiz.routes"));
 app.use("/api/courses", require("./routes/course.routes"));
+app.use("/api/payments", require("./routes/payment.routes"));
+app.use("/api/certificates", require("./routes/certificate.routes"));
 
 app.get("/", (req, res) => {
   res.send("API is running...");

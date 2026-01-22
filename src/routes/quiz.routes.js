@@ -5,6 +5,7 @@ const {
   createQuiz,
   updateQuiz,
   deleteQuiz,
+  submitQuiz,
 } = require("../controllers/quiz.controller");
 const { protect: auth, admin } = require("../middlewares/auth.middleware");
 const validateBody = require("../middlewares/validateBody.middleware");
@@ -29,8 +30,10 @@ router
     admin,
     validateObjectId("id"),
     validateBody(updateQuizSchema),
-    updateQuiz
+    updateQuiz,
   )
   .delete(auth, admin, validateObjectId("id"), deleteQuiz);
+
+router.post("/:id/submit", auth, validateObjectId("id"), submitQuiz);
 
 module.exports = router;

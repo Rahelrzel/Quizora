@@ -8,8 +8,9 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true, select: false },
     phone: { type: String },
     role: { type: String, enum: ["user", "admin"], default: "user" },
+    purchasedQuizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 // Hash password before saving
@@ -25,4 +26,4 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-module.exports = mongoose.model("User", userSchema);
+module.exports = mongoose.models.User || mongoose.model("User", userSchema);
