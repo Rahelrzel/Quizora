@@ -8,7 +8,7 @@ const {
 } = require("../controllers/category.controller");
 const { protect: auth, admin } = require("../middlewares/auth.middleware");
 const validateBody = require("../middlewares/validateBody.middleware");
-const validateObjectId = require("../middlewares/validateParams.middleware");
+const validateId = require("../middlewares/validateParams.middleware");
 const {
   createCategorySchema,
   updateCategorySchema,
@@ -24,14 +24,14 @@ router
 
 router
   .route("/:id")
-  .get(validateObjectId("id"), getCategoryById)
+  .get(validateId("id"), getCategoryById)
   .put(
     auth,
     admin,
-    validateObjectId("id"),
+    validateId("id"),
     validateBody(updateCategorySchema),
-    updateCategory
+    updateCategory,
   )
-  .delete(auth, admin, validateObjectId("id"), deleteCategory);
+  .delete(auth, admin, validateId("id"), deleteCategory);
 
 module.exports = router;

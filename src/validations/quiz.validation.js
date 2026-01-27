@@ -1,5 +1,14 @@
 const { z } = require("zod");
 
+// Helper for numeric IDs in MySQL
+const idSchema = z.union([
+  z.number().int().positive(),
+  z
+    .string()
+    .regex(/^\d+$/)
+    .transform((v) => parseInt(v, 10)),
+]);
+
 const questionSchema = z.object({
   questionText: z.string().min(1, "Question text is required"),
   options: z.array(z.string().min(1)).min(2, "At least 2 options required"),
@@ -8,7 +17,7 @@ const questionSchema = z.object({
 });
 
 const createQuizSchema = z.object({
-  categoryId: z.string().length(24, "Invalid Category ID"),
+  categoryId: idSchema,
   title: z.string().min(1, "Title is required"),
   questions: z
     .array(questionSchema)
@@ -19,7 +28,7 @@ const createQuizSchema = z.object({
 });
 
 const updateQuizSchema = z.object({
-  categoryId: z.string().length(24, "Invalid Category ID").optional(),
+  categoryId: idSchema.optional(),
   title: z.string().min(1, "Title is required").optional(),
   questions: z
     .array(questionSchema)
