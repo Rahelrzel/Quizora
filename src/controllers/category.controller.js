@@ -1,4 +1,10 @@
-const TestCategory = require("../models/TestCategory");
+const {
+  findMany,
+  findUnique,
+  create,
+  update,
+  delete: deleteOne,
+} = require("../models/TestCategory");
 const HttpError = require("../utils/HttpError");
 
 // @desc    Get all categories
@@ -6,7 +12,7 @@ const HttpError = require("../utils/HttpError");
 // @access  Public
 const getCategories = async (req, res, next) => {
   try {
-    const categories = await TestCategory.find();
+    const categories = await findMany();
     res.json(categories);
   } catch (error) {
     next(error);
@@ -18,10 +24,12 @@ const getCategories = async (req, res, next) => {
 // @access  Public
 const getCategoryById = async (req, res, next) => {
   try {
-    const category = await TestCategory.findById(req.params.id);
+    const category = await findUnique({
+      where: { id: req.params.id },
+    });
     if (!category) {
       return next(
-        new HttpError({ status: 404, message: "Category not found" })
+        new HttpError({ status: 404, message: "Category not found" }),
       );
     }
     res.json(category);
@@ -35,16 +43,18 @@ const getCategoryById = async (req, res, next) => {
 // @access  Admin
 const createCategory = async (req, res, next) => {
   try {
-    const existingCategory = await TestCategory.findOne({
-      name: req.body.name,
+    const existingCategory = await findUnique({
+      where: { name: req.body.name },
     });
     if (existingCategory) {
       return next(
-        new HttpError({ status: 400, message: "Category already exists" })
+        new HttpError({ status: 400, message: "Category already exists" }),
       );
     }
 
-    const category = await TestCategory.create(req.body);
+    const category = await create({
+      data: req.body,
+    });
     res.status(201).json(category);
   } catch (error) {
     next(error);
@@ -56,15 +66,14 @@ const createCategory = async (req, res, next) => {
 // @access  Admin
 const updateCategory = async (req, res, next) => {
   try {
-    const category = await TestCategory.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
+    const category = await update({
+      where: { id: req.params.id },
+      data: req.body,
+    });
 
     if (!category) {
       return next(
-        new HttpError({ status: 404, message: "Category not found" })
+        new HttpError({ status: 404, message: "Category not found" }),
       );
     }
 
@@ -79,11 +88,13 @@ const updateCategory = async (req, res, next) => {
 // @access  Admin
 const deleteCategory = async (req, res, next) => {
   try {
-    const category = await TestCategory.findByIdAndDelete(req.params.id);
+    const category = await deleteOne({
+      where: { id: req.params.id },
+    });
 
     if (!category) {
       return next(
-        new HttpError({ status: 404, message: "Category not found" })
+        new HttpError({ status: 404, message: "Category not found" }),
       );
     }
 

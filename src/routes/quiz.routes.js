@@ -9,7 +9,7 @@ const {
 } = require("../controllers/quiz.controller");
 const { protect: auth, admin } = require("../middlewares/auth.middleware");
 const validateBody = require("../middlewares/validateBody.middleware");
-const validateObjectId = require("../middlewares/validateParams.middleware");
+const validateId = require("../middlewares/validateParams.middleware");
 const {
   createQuizSchema,
   updateQuizSchema,
@@ -24,16 +24,16 @@ router
 
 router
   .route("/:id")
-  .get(validateObjectId("id"), getQuizById)
+  .get(validateId("id"), getQuizById)
   .put(
     auth,
     admin,
-    validateObjectId("id"),
+    validateId("id"),
     validateBody(updateQuizSchema),
     updateQuiz,
   )
-  .delete(auth, admin, validateObjectId("id"), deleteQuiz);
+  .delete(auth, admin, validateId("id"), deleteQuiz);
 
-router.post("/:id/submit", auth, validateObjectId("id"), submitQuiz);
+router.post("/:id/submit", auth, validateId("id"), submitQuiz);
 
 module.exports = router;

@@ -1,11 +1,5 @@
-const mongoose = require("mongoose");
+const prisma = require("../config/prisma");
 
-const testCategorySchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true, unique: true },
-    description: { type: String },
-  },
-  { timestamps: true }
-);
+const TestCategory = prisma.testCategory;
 
-module.exports = mongoose.model("TestCategory", testCategorySchema);
+module.exports = TestCategory;

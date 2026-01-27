@@ -1,29 +1,34 @@
-const mongoose = require("mongoose");
+const prisma = require("../config/prisma");
 const bcrypt = require("bcrypt");
 
-const userSchema = new mongoose.Schema(
-  {
-    name: { type: String, required: true },
-    email: { type: String, unique: true, required: true, lowercase: true },
-    password: { type: String, required: true, select: false },
-    phone: { type: String },
-    role: { type: String, enum: ["user", "admin"], default: "user" },
-    purchasedQuizzes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Quiz" }],
-  },
-  { timestamps: true },
-);
+// Since Prisma doesn't have instance methods like Mongoose,
+// we provide helper functions or just export the prisma model.
+// For minimal changes, we export the prisma model object.
 
-// Hash password before saving
-userSchema.pre("save", async function () {
-  if (!this.isModified("password")) return;
+const User = prisma.user;
 
-  const salt = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, salt);
-});
-
-// Method to check password
-userSchema.methods.matchPassword = async function (enteredPassword) {
-  return await bcrypt.compare(enteredPassword, this.password);
+/**
+ * Helper to match password (previously a mongoose instance method)
+ * @param {string} enteredPassword
+ * @param {string} hashedPassword
+ * @returns {Promise<boolean>}
+ */
+const matchPassword = async (enteredPassword, hashedPassword) => {
+  return await bcrypt.compare(enteredPassword, hashedPassword);
 };
 
-module.exports = mongoose.models.User || mongoose.model("User", userSchema);
+/**
+ * Helper to hash password (previously a mongoose pre-save hook)
+ * @param {string} password
+ * @returns {Promise<string>}
+ */
+const hashPassword = async (password) => {
+  const salt = await bcrypt.genSalt(10);
+  return await bcrypt.hash(password, salt);
+};
+
+module.exports = {
+  ...User,
+  matchPassword,
+  hashPassword,
+};

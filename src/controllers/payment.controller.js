@@ -1,5 +1,5 @@
+const prisma = require("../config/prisma");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-const User = require("../models/user");
 const HttpError = require("../utils/HttpError");
 
 // @desc    Create Stripe Checkout Session
@@ -9,14 +9,13 @@ const createCheckoutSession = async (req, res, next) => {
   try {
     const { quizId } = req.body;
 
-    if (!quizId) {
-      return next(new HttpError("Quiz ID is required", 400));
-    }
+    const quiz = await prisma.quiz.findUnique({
+      where: { id: parseInt(quizId) },
+    });
 
-    // You might want to fetch the quiz details here to get the real title/price
-    // For now, using a generic product or dynamic price data
-    // Assuming a fixed price or passing it in body (not recommended for security)
-    // Or valid quizId check
+    if (!quiz) {
+      return next(new HttpError("Quiz not found", 404));
+    }
 
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -25,42 +24,38 @@ const createCheckoutSession = async (req, res, next) => {
           price_data: {
             currency: "usd",
             product_data: {
-              name: "Quiz Access", // Ideally fetching Quiz title
-              metadata: {
-                quizId: quizId,
-              },
+              name: quiz.title,
             },
-            unit_amount: 500, // $5.00 - Placeholder price
+            unit_amount: 1000, // $10.00
           },
           quantity: 1,
         },
       ],
       mode: "payment",
-      success_url: `${process.env.CLIENT_URL}/quiz/${quizId}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.CLIENT_URL}/quiz/${quizId}?canceled=true`,
+      success_url: `${process.env.CLIENT_URL}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CLIENT_URL}/payment-cancel`,
       metadata: {
-        userId: req.user._id.toString(),
-        quizId: quizId,
+        userId: req.user.id.toString(),
+        quizId: quiz.id.toString(),
       },
     });
 
-    res.json({ url: session.url });
+    res.json({ id: session.id, url: session.url });
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Stripe Webhook
+// @desc    Webhook for Stripe Events
 // @route   POST /api/payments/webhook
-// @access  Public (Stripe)
+// @access  Public
 const handleWebhook = async (req, res, next) => {
   const sig = req.headers["stripe-signature"];
   let event;
 
   try {
-    // req.body must be raw buffer here
     event = stripe.webhooks.constructEvent(
-      req.body,
+      req.rawBody,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET,
     );
@@ -69,20 +64,23 @@ const handleWebhook = async (req, res, next) => {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Handle the event
   if (event.type === "checkout.session.completed") {
     const session = event.data.object;
     const { userId, quizId } = session.metadata;
 
-    if (userId && quizId) {
-      try {
-        await User.findByIdAndUpdate(userId, {
-          $addToSet: { purchasedQuizzes: quizId },
-        });
-        console.log(`User ${userId} unlocked quiz ${quizId}`);
-      } catch (err) {
-        console.error("Error updating user purchase:", err);
-      }
+    try {
+      // Add quiz to user's purchasedQuizzes in MySQL
+      await prisma.user.update({
+        where: { id: parseInt(userId) },
+        data: {
+          purchasedQuizzes: {
+            connect: { id: parseInt(quizId) },
+          },
+        },
+      });
+      console.log(`User ${userId} purchased Quiz ${quizId}`);
+    } catch (error) {
+      console.error("Error updating user purchased quizzes:", error);
     }
   }
 

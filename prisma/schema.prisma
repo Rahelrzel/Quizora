@@ -1,0 +1,102 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id               Int           @id @default(autoincrement())
+  name             String
+  email            String        @unique
+  password         String
+  phone            String?
+  role             Role          @default(user)
+  purchasedQuizzes Quiz[]        @relation("UserPurchases")
+  createdQuizzes   Quiz[]        @relation("UserCreations")
+  certificates     Certificate[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+
+  @@map("user")
+}
+
+enum Role {
+  user
+  admin
+}
+
+model TestCategory {
+  id           Int           @id @default(autoincrement())
+  name         String        @unique
+  description  String?       @db.Text
+  quizzes      Quiz[]
+  certificates Certificate[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("test_categories")
+}
+
+model Quiz {
+  id           Int           @id @default(autoincrement())
+  title        String
+  passingScore Int           @default(70)
+  totalPoints  Int
+  timeLimit    Int?
+  categoryId   Int
+  category     TestCategory  @relation(fields: [categoryId], references: [id])
+  creatorId    Int?
+  creator      User?         @relation("UserCreations", fields: [creatorId], references: [id])
+  questions    Question[]
+  certificates Certificate[]
+  purchasers   User[]        @relation("UserPurchases")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("quizzes")
+}
+
+model Question {
+  id                 Int     @id @default(autoincrement())
+  quizId             Int
+  quiz               Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  questionText       String  @db.Text
+  options            Json
+  correctAnswerIndex Int
+  explanation        String? @db.Text
+
+  @@map("questions")
+}
+
+model Course {
+  id          Int          @id @default(autoincrement())
+  title       String
+  description String?  @db.Text
+  contentUrl  String?
+  thumbnail   String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("courses")
+}
+
+model Certificate {
+  id            Int          @id @default(autoincrement())
+  userId        Int
+  user          User         @relation(fields: [userId], references: [id])
+  categoryId    Int
+  category      TestCategory @relation(fields: [categoryId], references: [id])
+  quizId        Int
+  quiz          Quiz         @relation(fields: [quizId], references: [id])
+  score         Float
+  issueDate     DateTime     @default(now())
+  certificateID String       @unique
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@map("certificates")
+}

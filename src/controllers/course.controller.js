@@ -1,4 +1,4 @@
-const Course = require("../models/Course");
+const prisma = require("../config/prisma");
 const HttpError = require("../utils/HttpError");
 
 // @desc    Get all courses
@@ -6,7 +6,7 @@ const HttpError = require("../utils/HttpError");
 // @access  Public
 const getCourses = async (req, res, next) => {
   try {
-    const courses = await Course.find();
+    const courses = await prisma.course.findMany();
     res.json(courses);
   } catch (error) {
     next(error);
@@ -18,7 +18,10 @@ const getCourses = async (req, res, next) => {
 // @access  Public
 const getCourseById = async (req, res, next) => {
   try {
-    const course = await Course.findById(req.params.id);
+    const course = await prisma.course.findUnique({
+      where: { id: req.params.id },
+    });
+
     if (!course) {
       return next(new HttpError({ status: 404, message: "Course not found" }));
     }
@@ -33,7 +36,17 @@ const getCourseById = async (req, res, next) => {
 // @access  Admin
 const createCourse = async (req, res, next) => {
   try {
-    const course = await Course.create(req.body);
+    const { title, description, contentUrl, thumbnail } = req.body;
+
+    const course = await prisma.course.create({
+      data: {
+        title,
+        description,
+        contentUrl,
+        thumbnail,
+      },
+    });
+
     res.status(201).json(course);
   } catch (error) {
     next(error);
@@ -45,9 +58,9 @@ const createCourse = async (req, res, next) => {
 // @access  Admin
 const updateCourse = async (req, res, next) => {
   try {
-    const course = await Course.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-      runValidators: true,
+    const course = await prisma.course.update({
+      where: { id: req.params.id },
+      data: req.body,
     });
 
     if (!course) {
@@ -65,7 +78,9 @@ const updateCourse = async (req, res, next) => {
 // @access  Admin
 const deleteCourse = async (req, res, next) => {
   try {
-    const course = await Course.findByIdAndDelete(req.params.id);
+    const course = await prisma.course.delete({
+      where: { id: req.params.id },
+    });
 
     if (!course) {
       return next(new HttpError({ status: 404, message: "Course not found" }));

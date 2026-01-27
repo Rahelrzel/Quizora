@@ -8,7 +8,7 @@ const {
 } = require("../controllers/course.controller");
 const { protect: auth, admin } = require("../middlewares/auth.middleware");
 const validateBody = require("../middlewares/validateBody.middleware");
-const validateObjectId = require("../middlewares/validateParams.middleware");
+const validateId = require("../middlewares/validateParams.middleware");
 const {
   createCourseSchema,
   updateCourseSchema,
@@ -23,14 +23,14 @@ router
 
 router
   .route("/:id")
-  .get(validateObjectId("id"), getCourseById)
+  .get(validateId("id"), getCourseById)
   .put(
     auth,
     admin,
-    validateObjectId("id"),
+    validateId("id"),
     validateBody(updateCourseSchema),
-    updateCourse
+    updateCourse,
   )
-  .delete(auth, admin, validateObjectId("id"), deleteCourse);
+  .delete(auth, admin, validateId("id"), deleteCourse);
 
 module.exports = router;

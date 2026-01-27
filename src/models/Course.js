@@ -1,13 +1,5 @@
-const mongoose = require("mongoose");
+const prisma = require("../config/prisma");
 
-const courseSchema = new mongoose.Schema(
-  {
-    title: { type: String, required: true },
-    description: { type: String },
-    contentUrl: { type: String },
-    thumbnail: { type: String },
-  },
-  { timestamps: true }
-);
+const Course = prisma.course;
 
-module.exports = mongoose.model("Course", courseSchema);
+module.exports = Course;

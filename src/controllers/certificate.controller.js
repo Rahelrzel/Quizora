@@ -1,46 +1,44 @@
-const Certificate = require("../models/Certificate");
+const prisma = require("../config/prisma");
 const HttpError = require("../utils/HttpError");
-const generateCertificatePDF = require("../utils/generateCertificatePDF");
+const PDFDocument = require("pdfkit");
 
-// @desc    Get logged-in user's certificates
-// @route   GET /api/certificates/my
+// @desc    Get user certificates
+// @route   GET /api/certificates
 // @access  Private
 const getMyCertificates = async (req, res, next) => {
   try {
-    const certificates = await Certificate.find({ userId: req.user._id })
-      .populate("quizId", "title")
-      .populate("categoryId", "name")
-      .sort("-createdAt");
+    const certificates = await prisma.certificate.findMany({
+      where: { userId: req.user.id },
+      include: {
+        category: { select: { name: true } },
+        quiz: { select: { title: true } },
+      },
+    });
     res.json(certificates);
   } catch (error) {
     next(error);
   }
 };
 
-// @desc    Get certificate details
+// @desc    Get certificate by ID
 // @route   GET /api/certificates/:id
-// @access  Private (Owner/Admin)
+// @access  Public
 const getCertificateById = async (req, res, next) => {
   try {
-    const certificate = await Certificate.findById(req.params.id)
-      .populate("quizId", "title")
-      .populate("categoryId", "name")
-      .populate("userId", "name");
+    const certificate = await prisma.certificate.findUnique({
+      where: { certificateID: req.params.id }, // Note: using unique certificateID string
+      include: {
+        user: { select: { name: true } },
+        category: { select: { name: true } },
+        quiz: { select: { title: true } },
+      },
+    });
 
     if (!certificate) {
-      return next(new HttpError("Certificate not found", 404));
-    }
-
-    // Check ownership or admin
-    if (
-      certificate.userId._id.toString() !== req.user._id.toString() &&
-      req.user.role !== "admin"
-    ) {
       return next(
-        new HttpError("Not authorized to view this certificate", 403),
+        new HttpError({ status: 404, message: "Certificate not found" }),
       );
     }
-
     res.json(certificate);
   } catch (error) {
     next(error);
@@ -49,42 +47,94 @@ const getCertificateById = async (req, res, next) => {
 
 // @desc    Download certificate PDF
 // @route   GET /api/certificates/:id/download
-// @access  Private (Owner/Admin)
+// @access  Public
 const downloadCertificate = async (req, res, next) => {
   try {
-    const certificate = await Certificate.findById(req.params.id)
-      .populate("quizId", "title")
-      .populate("categoryId", "name")
-      .populate("userId", "name");
+    const certificate = await prisma.certificate.findUnique({
+      where: { certificateID: req.params.id },
+      include: {
+        user: { select: { name: true } },
+        category: { select: { name: true } },
+        quiz: { select: { title: true } },
+      },
+    });
 
     if (!certificate) {
-      return next(new HttpError("Certificate not found", 404));
-    }
-
-    // Check ownership or admin
-    if (
-      certificate.userId._id.toString() !== req.user._id.toString() &&
-      req.user.role !== "admin"
-    ) {
       return next(
-        new HttpError("Not authorized to download this certificate", 403),
+        new HttpError({ status: 404, message: "Certificate not found" }),
       );
     }
 
-    const filename = `certificate-${certificate.certificateID}.pdf`;
-    res.setHeader("Content-disposition", `attachment; filename=${filename}`);
-    res.setHeader("Content-type", "application/pdf");
+    const doc = new PDFDocument({
+      layout: "landscape",
+      size: "A4",
+    });
 
-    const data = {
-      userName: certificate.userId.name,
-      quizTitle: certificate.quizId.title,
-      categoryName: certificate.categoryId.name,
-      score: certificate.score,
-      issueDate: certificate.issueDate,
-      certificateID: certificate.certificateID,
-    };
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      `attachment; filename=certificate-${certificate.certificateID}.pdf`,
+    );
 
-    generateCertificatePDF(data, res);
+    doc.pipe(res);
+
+    // Simple Certificate Design
+    doc
+      .rect(50, 50, doc.page.width - 100, doc.page.height - 100)
+      .strokeColor("#4A90E2")
+      .lineWidth(10)
+      .stroke();
+
+    doc
+      .fontSize(40)
+      .fillColor("#333")
+      .text("CERTIFICATE OF COMPLETION", 100, 150, { align: "center" });
+
+    doc
+      .fontSize(20)
+      .text(`This is to certify that`, 100, 220, { align: "center" });
+
+    doc.fontSize(30).fillColor("#000").text(certificate.user.name, 100, 260, {
+      align: "center",
+      underline: true,
+    });
+
+    doc
+      .fontSize(20)
+      .fillColor("#333")
+      .text(`has successfully completed the quiz`, 100, 320, {
+        align: "center",
+      });
+
+    doc
+      .fontSize(25)
+      .fillColor("#000")
+      .text(certificate.quiz.title, 100, 360, { align: "center" });
+
+    doc
+      .fontSize(15)
+      .fillColor("#666")
+      .text(`Category: ${certificate.category.name}`, 100, 420, {
+        align: "center",
+      });
+
+    doc
+      .fontSize(15)
+      .text(`Score: ${certificate.score}%`, 100, 440, { align: "center" });
+
+    doc
+      .fontSize(12)
+      .text(`Issue Date: ${certificate.issueDate.toDateString()}`, 100, 480, {
+        align: "center",
+      });
+
+    doc
+      .fontSize(12)
+      .text(`Certificate ID: ${certificate.certificateID}`, 100, 500, {
+        align: "center",
+      });
+
+    doc.end();
   } catch (error) {
     next(error);
   }
