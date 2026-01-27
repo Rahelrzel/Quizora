@@ -21,6 +21,7 @@ const protect = async (req, res, next) => {
           name: true,
           email: true,
           role: true,
+          paymentId: true,
         },
       });
 

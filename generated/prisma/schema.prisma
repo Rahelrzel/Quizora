@@ -18,6 +18,8 @@ model User {
   purchasedQuizzes Quiz[]        @relation("UserPurchases")
   createdQuizzes   Quiz[]        @relation("UserCreations")
   certificates     Certificate[]
+  paymentId        Int?          @unique // null by default, set once the user pays
+  payment          Payment?      @relation(fields: [paymentId], references: [id])
   createdAt        DateTime      @default(now())
   updatedAt        DateTime      @updatedAt
 
@@ -99,4 +101,21 @@ model Certificate {
   updatedAt     DateTime     @updatedAt
 
   @@map("certificates")
+}
+
+model Payment {
+  id               Int      @id @default(autoincrement())
+  user             User?    @relation
+  userId           Int      @unique // ensures one payment per user
+  stripePaymentId  String   @unique
+  stripeCustomerId String
+  amount           Float
+  currency         String
+  status           String // e.g., 'succeeded', 'pending', 'failed'
+  paymentMethod    String?
+  receiptUrl       String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@map("payments")
 }
