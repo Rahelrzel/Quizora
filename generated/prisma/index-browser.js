@@ -128,6 +128,7 @@ exports.Prisma.UserScalarFieldEnum = {
   password: 'password',
   phone: 'phone',
   role: 'role',
+  paymentId: 'paymentId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -179,6 +180,20 @@ exports.Prisma.CertificateScalarFieldEnum = {
   score: 'score',
   issueDate: 'issueDate',
   certificateID: 'certificateID',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PaymentScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  stripePaymentId: 'stripePaymentId',
+  stripeCustomerId: 'stripeCustomerId',
+  amount: 'amount',
+  currency: 'currency',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
+  receiptUrl: 'receiptUrl',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -239,6 +254,15 @@ exports.Prisma.CourseOrderByRelevanceFieldEnum = {
 exports.Prisma.CertificateOrderByRelevanceFieldEnum = {
   certificateID: 'certificateID'
 };
+
+exports.Prisma.PaymentOrderByRelevanceFieldEnum = {
+  stripePaymentId: 'stripePaymentId',
+  stripeCustomerId: 'stripeCustomerId',
+  currency: 'currency',
+  status: 'status',
+  paymentMethod: 'paymentMethod',
+  receiptUrl: 'receiptUrl'
+};
 exports.Role = exports.$Enums.Role = {
   user: 'user',
   admin: 'admin'
@@ -250,7 +274,8 @@ exports.Prisma.ModelName = {
   Quiz: 'Quiz',
   Question: 'Question',
   Course: 'Course',
-  Certificate: 'Certificate'
+  Certificate: 'Certificate',
+  Payment: 'Payment'
 };
 
 /**

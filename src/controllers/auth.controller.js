@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const prisma = require("../config/prisma");
 const {
   findUnique,
   create,
@@ -82,7 +83,44 @@ const login = async (req, res, next) => {
   }
 };
 
+// @desc    Get all users (Admin view)
+// @route   GET /api/auth/users
+// @access  Admin
+const getAllUsers = async (req, res, next) => {
+  try {
+    const users = await prisma.user.findMany({
+      include: {
+        payment: {
+          select: { status: true },
+        },
+        _count: {
+          select: {
+            purchasedQuizzes: true,
+            certificates: true,
+          },
+        },
+      },
+    });
+
+    const formattedUsers = users.map((user) => ({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      phone: user.phone,
+      paymentStatus: user.payment ? user.payment.status : "pending",
+      purchasedQuizzesCount: user._count.purchasedQuizzes,
+      certificatesCount: user._count.certificates,
+      createdAt: user.createdAt,
+    }));
+
+    res.json(formattedUsers);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   register,
   login,
+  getAllUsers,
 };

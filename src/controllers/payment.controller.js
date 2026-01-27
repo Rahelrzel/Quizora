@@ -69,18 +69,53 @@ const handleWebhook = async (req, res, next) => {
     const { userId, quizId } = session.metadata;
 
     try {
-      // Add quiz to user's purchasedQuizzes in MySQL
+      // Create payment record and update user
+      await prisma.$transaction([
+        prisma.payment.create({
+          data: {
+            userId: parseInt(userId),
+            stripePaymentId: session.payment_intent,
+            stripeCustomerId: session.customer,
+            amount: session.amount_total / 100,
+            currency: session.currency,
+            status: "succeeded",
+            paymentMethod: session.payment_method_types[0],
+            receiptUrl: session.receipt_url || null,
+          },
+        }),
+        prisma.user.update({
+          where: { id: parseInt(userId) },
+          data: {
+            purchasedQuizzes: {
+              connect: { id: parseInt(quizId) },
+            },
+            // Note: paymentId will be automatically set if we use a nested write,
+            // but we need the payment record first for the schema relation.
+            // Prisma will handle the back-relation if we use connect.
+          },
+        }),
+      ]);
+
+      // Since we need to update user.paymentId, let's do it properly
+      const payment = await prisma.payment.findUnique({
+        where: { stripePaymentId: session.payment_intent },
+      });
+
       await prisma.user.update({
         where: { id: parseInt(userId) },
         data: {
-          purchasedQuizzes: {
-            connect: { id: parseInt(quizId) },
-          },
+          paymentId: payment.id,
         },
       });
-      console.log(`User ${userId} purchased Quiz ${quizId}`);
+
+      console.log(
+        `User ${userId} purchased Quiz ${quizId} and payment record created.`,
+      );
     } catch (error) {
-      console.error("Error updating user purchased quizzes:", error);
+      console.error(
+        "Error updating user purchased quizzes and payment:",
+        error,
+      );
     }
   }
 
