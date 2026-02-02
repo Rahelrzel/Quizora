@@ -15,6 +15,8 @@ const router = express.Router();
 
 router.post("/register", validateBody(registerSchema), register);
 router.post("/login", validateBody(loginSchema), login);
+// GET /api/auth/users — admin only
 router.get("/users", protect, admin, getAllUsers);
+router.get("/users/", protect, admin, getAllUsers);
 
 module.exports = router;

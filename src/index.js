@@ -6,6 +6,7 @@ const morgan = require("morgan");
 const connectDB = require("./config/db.config");
 const authRoutes = require("./routes/auth.routes");
 const errorHandler = require("./middlewares/error.middleware");
+const HttpError = require("./utils/HttpError");
 
 dotenv.config();
 
@@ -13,13 +14,20 @@ connectDB();
 
 const app = express();
 
-app.use(
-  express.json({
-    verify: (req, res, buf) => {
-      req.rawBody = buf;
-    },
-  }),
-);
+// IMPORTANT (Stripe webhooks):
+// Stripe requires the *raw* request body to verify signatures. If we run `express.json()`
+// on the webhook route first, we may lose the raw bytes and signature verification fails.
+// So we skip JSON parsing for the webhook endpoint and let the route handle raw parsing.
+const jsonParser = express.json({
+  verify: (req, res, buf) => {
+    req.rawBody = buf;
+  },
+});
+
+app.use((req, res, next) => {
+  if (req.originalUrl === "/api/payments/webhook") return next();
+  return jsonParser(req, res, next);
+});
 app.use(
   cors({
     origin: "*", // allow all origins for testing
@@ -45,6 +53,9 @@ app.use("/api/certificates", require("./routes/certificate.routes"));
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
+
+// 404 — must be after all route registrations so unmatched paths return JSON
+app.use((req, res, next) => next(new HttpError({ status: 404, message: "Not found" })));
 
 app.use(errorHandler);
 
