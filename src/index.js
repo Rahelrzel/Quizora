@@ -5,29 +5,45 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const connectDB = require("./config/db.config");
 const authRoutes = require("./routes/auth.routes");
+const paymentRoutes = require("./routes/payment.routes");
 const errorHandler = require("./middlewares/error.middleware");
 const HttpError = require("./utils/HttpError");
+const { handleWebhook } = require("./controllers/payment.controller");
 
 dotenv.config();
+
+// Fail fast if critical Stripe / client env vars are missing.
+// Without these, payments/webhooks cannot function correctly and would fail silently.
+const requiredEnv = [
+  "STRIPE_SECRET_KEY",
+  "STRIPE_WEBHOOK_SECRET",
+  "CLIENT_URL",
+];
+const missingEnv = requiredEnv.filter((name) => !process.env[name]);
+if (missingEnv.length > 0) {
+  // eslint-disable-next-line no-console
+  console.error(
+    `[CONFIG] Missing required environment variables: ${missingEnv.join(", ")}`,
+  );
+  process.exit(1);
+}
 
 connectDB();
 
 const app = express();
 
 // IMPORTANT (Stripe webhooks):
-// Stripe requires the *raw* request body to verify signatures. If we run `express.json()`
-// on the webhook route first, we may lose the raw bytes and signature verification fails.
-// So we skip JSON parsing for the webhook endpoint and let the route handle raw parsing.
-const jsonParser = express.json({
-  verify: (req, res, buf) => {
-    req.rawBody = buf;
-  },
-});
+// Stripe requires the *raw* request body for signature verification.
+// We therefore register the webhook route with `express.raw(...)` *before* `express.json()`
+// so that only this route receives the raw Buffer body.
+app.post(
+  "/api/payments/webhook",
+  express.raw({ type: "application/json" }),
+  handleWebhook,
+);
 
-app.use((req, res, next) => {
-  if (req.originalUrl === "/api/payments/webhook") return next();
-  return jsonParser(req, res, next);
-});
+// All other routes use regular JSON parsing.
+app.use(express.json());
 app.use(
   cors({
     origin: "*", // allow all origins for testing
@@ -47,7 +63,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/categories", require("./routes/category.routes"));
 app.use("/api/quizzes", require("./routes/quiz.routes"));
 app.use("/api/courses", require("./routes/course.routes"));
-app.use("/api/payments", require("./routes/payment.routes"));
+app.use("/api/payments", paymentRoutes);
 app.use("/api/certificates", require("./routes/certificate.routes"));
 
 app.get("/", (req, res) => {
