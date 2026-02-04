@@ -31,8 +31,11 @@ const getQuizzes = async (req, res, next) => {
 // @access  Public
 const getQuizById = async (req, res, next) => {
   try {
+    // FIX: Prisma expects Int ID, convert param string to number
+    const quizId = parseInt(req.params.id, 10);
+
     const quiz = await prisma.quiz.findUnique({
-      where: { id: req.params.id },
+      where: { id: quizId }, // FIX: use parsed Int ID
       include: {
         category: {
           select: { name: true, description: true },
@@ -84,6 +87,9 @@ const createQuiz = async (req, res, next) => {
 // @access  Admin
 const updateQuiz = async (req, res, next) => {
   try {
+    // FIX: ensure numeric ID for Prisma
+    const quizId = parseInt(req.params.id, 10);
+
     const { questions, categoryId, ...rest } = req.body;
 
     // Logic for updating questions might vary (replace all or update specific).
@@ -93,14 +99,14 @@ const updateQuiz = async (req, res, next) => {
 
     if (questions) {
       // Delete existing questions first (simple replacement strategy)
-      await prisma.question.deleteMany({ where: { quizId: req.params.id } });
+      await prisma.question.deleteMany({ where: { quizId } }); // FIX: numeric quizId
       data.questions = {
         create: questions,
       };
     }
 
     const quiz = await prisma.quiz.update({
-      where: { id: req.params.id },
+      where: { id: quizId }, // FIX: numeric quizId
       data,
       include: {
         questions: true,
@@ -122,9 +128,12 @@ const updateQuiz = async (req, res, next) => {
 // @access  Admin
 const deleteQuiz = async (req, res, next) => {
   try {
+    // FIX: ensure numeric ID for Prisma delete
+    const quizId = parseInt(req.params.id, 10);
+
     // Cascade delete is handled by Prisma schema (onDelete: Cascade)
     const quiz = await prisma.quiz.delete({
-      where: { id: req.params.id },
+      where: { id: quizId }, // FIX: numeric quizId
     });
 
     if (!quiz) {
@@ -142,10 +151,23 @@ const deleteQuiz = async (req, res, next) => {
 // @access  Private
 const submitQuiz = async (req, res, next) => {
   try {
+    // FIX (business rule): require successful payment before quiz submission
+    if (!req.user.paymentId) {
+      return next(
+        new HttpError({
+          status: 403,
+          message: "Payment required to submit quiz",
+        }),
+      );
+    }
+
+    // FIX: Prisma expects numeric quiz ID
+    const quizId = parseInt(req.params.id, 10);
+
     const { answers } = req.body;
 
     const quiz = await prisma.quiz.findUnique({
-      where: { id: req.params.id },
+      where: { id: quizId }, // FIX: use parsed Int ID
       include: { questions: true },
     });
 
