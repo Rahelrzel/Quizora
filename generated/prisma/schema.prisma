@@ -9,19 +9,18 @@ datasource db {
 }
 
 model User {
-  id               Int           @id @default(autoincrement())
-  name             String
-  email            String        @unique
-  password         String
-  phone            String?
-  role             Role          @default(user)
-  purchasedQuizzes Quiz[]        @relation("UserPurchases")
-  createdQuizzes   Quiz[]        @relation("UserCreations")
-  certificates     Certificate[]
-  paymentId        Int?          @unique // null by default, set once the user pays
-  payment          Payment?      @relation(fields: [paymentId], references: [id])
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id             Int           @id @default(autoincrement())
+  name           String
+  email          String        @unique
+  password       String
+  phone          String?
+  role           Role          @default(user)
+  createdQuizzes Quiz[]        @relation("UserCreations")
+  certificates   Certificate[]
+  paymentId      Int?          @unique // null by default, set once the user pays
+  payment        Payment?      @relation(fields: [paymentId], references: [id])
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
 
   @@map("user")
 }
@@ -55,7 +54,6 @@ model Quiz {
   creator      User?         @relation("UserCreations", fields: [creatorId], references: [id])
   questions    Question[]
   certificates Certificate[]
-  purchasers   User[]        @relation("UserPurchases")
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 

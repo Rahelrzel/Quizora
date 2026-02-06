@@ -1368,13 +1368,11 @@ export namespace Prisma {
    */
 
   export type UserCountOutputType = {
-    purchasedQuizzes: number
     createdQuizzes: number
     certificates: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    purchasedQuizzes?: boolean | UserCountOutputTypeCountPurchasedQuizzesArgs
     createdQuizzes?: boolean | UserCountOutputTypeCountCreatedQuizzesArgs
     certificates?: boolean | UserCountOutputTypeCountCertificatesArgs
   }
@@ -1388,13 +1386,6 @@ export namespace Prisma {
      * Select specific fields to fetch from the UserCountOutputType
      */
     select?: UserCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * UserCountOutputType without action
-   */
-  export type UserCountOutputTypeCountPurchasedQuizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QuizWhereInput
   }
 
   /**
@@ -1459,13 +1450,11 @@ export namespace Prisma {
   export type QuizCountOutputType = {
     questions: number
     certificates: number
-    purchasers: number
   }
 
   export type QuizCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     questions?: boolean | QuizCountOutputTypeCountQuestionsArgs
     certificates?: boolean | QuizCountOutputTypeCountCertificatesArgs
-    purchasers?: boolean | QuizCountOutputTypeCountPurchasersArgs
   }
 
   // Custom InputTypes
@@ -1491,13 +1480,6 @@ export namespace Prisma {
    */
   export type QuizCountOutputTypeCountCertificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CertificateWhereInput
-  }
-
-  /**
-   * QuizCountOutputType without action
-   */
-  export type QuizCountOutputTypeCountPurchasersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: UserWhereInput
   }
 
 
@@ -1739,7 +1721,6 @@ export namespace Prisma {
     paymentId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    purchasedQuizzes?: boolean | User$purchasedQuizzesArgs<ExtArgs>
     createdQuizzes?: boolean | User$createdQuizzesArgs<ExtArgs>
     certificates?: boolean | User$certificatesArgs<ExtArgs>
     payment?: boolean | User$paymentArgs<ExtArgs>
@@ -1762,7 +1743,6 @@ export namespace Prisma {
 
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "phone" | "role" | "paymentId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    purchasedQuizzes?: boolean | User$purchasedQuizzesArgs<ExtArgs>
     createdQuizzes?: boolean | User$createdQuizzesArgs<ExtArgs>
     certificates?: boolean | User$certificatesArgs<ExtArgs>
     payment?: boolean | User$paymentArgs<ExtArgs>
@@ -1772,7 +1752,6 @@ export namespace Prisma {
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      purchasedQuizzes: Prisma.$QuizPayload<ExtArgs>[]
       createdQuizzes: Prisma.$QuizPayload<ExtArgs>[]
       certificates: Prisma.$CertificatePayload<ExtArgs>[]
       payment: Prisma.$PaymentPayload<ExtArgs> | null
@@ -2127,7 +2106,6 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    purchasedQuizzes<T extends User$purchasedQuizzesArgs<ExtArgs> = {}>(args?: Subset<T, User$purchasedQuizzesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     createdQuizzes<T extends User$createdQuizzesArgs<ExtArgs> = {}>(args?: Subset<T, User$createdQuizzesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     certificates<T extends User$certificatesArgs<ExtArgs> = {}>(args?: Subset<T, User$certificatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     payment<T extends User$paymentArgs<ExtArgs> = {}>(args?: Subset<T, User$paymentArgs<ExtArgs>>): Prisma__PaymentClient<$Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
@@ -2509,30 +2487,6 @@ export namespace Prisma {
      * Limit how many Users to delete.
      */
     limit?: number
-  }
-
-  /**
-   * User.purchasedQuizzes
-   */
-  export type User$purchasedQuizzesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Quiz
-     */
-    select?: QuizSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Quiz
-     */
-    omit?: QuizOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QuizInclude<ExtArgs> | null
-    where?: QuizWhereInput
-    orderBy?: QuizOrderByWithRelationInput | QuizOrderByWithRelationInput[]
-    cursor?: QuizWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: QuizScalarFieldEnum | QuizScalarFieldEnum[]
   }
 
   /**
@@ -3892,7 +3846,6 @@ export namespace Prisma {
     creator?: boolean | Quiz$creatorArgs<ExtArgs>
     questions?: boolean | Quiz$questionsArgs<ExtArgs>
     certificates?: boolean | Quiz$certificatesArgs<ExtArgs>
-    purchasers?: boolean | Quiz$purchasersArgs<ExtArgs>
     _count?: boolean | QuizCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quiz"]>
 
@@ -3916,7 +3869,6 @@ export namespace Prisma {
     creator?: boolean | Quiz$creatorArgs<ExtArgs>
     questions?: boolean | Quiz$questionsArgs<ExtArgs>
     certificates?: boolean | Quiz$certificatesArgs<ExtArgs>
-    purchasers?: boolean | Quiz$purchasersArgs<ExtArgs>
     _count?: boolean | QuizCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -3927,7 +3879,6 @@ export namespace Prisma {
       creator: Prisma.$UserPayload<ExtArgs> | null
       questions: Prisma.$QuestionPayload<ExtArgs>[]
       certificates: Prisma.$CertificatePayload<ExtArgs>[]
-      purchasers: Prisma.$UserPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -4283,7 +4234,6 @@ export namespace Prisma {
     creator<T extends Quiz$creatorArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$creatorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     questions<T extends Quiz$questionsArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     certificates<T extends Quiz$certificatesArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$certificatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    purchasers<T extends Quiz$purchasersArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$purchasersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4729,30 +4679,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CertificateScalarFieldEnum | CertificateScalarFieldEnum[]
-  }
-
-  /**
-   * Quiz.purchasers
-   */
-  export type Quiz$purchasersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-    orderBy?: UserOrderByWithRelationInput | UserOrderByWithRelationInput[]
-    cursor?: UserWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: UserScalarFieldEnum | UserScalarFieldEnum[]
   }
 
   /**
@@ -9061,7 +8987,6 @@ export namespace Prisma {
     paymentId?: IntNullableFilter<"User"> | number | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    purchasedQuizzes?: QuizListRelationFilter
     createdQuizzes?: QuizListRelationFilter
     certificates?: CertificateListRelationFilter
     payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
@@ -9077,7 +9002,6 @@ export namespace Prisma {
     paymentId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    purchasedQuizzes?: QuizOrderByRelationAggregateInput
     createdQuizzes?: QuizOrderByRelationAggregateInput
     certificates?: CertificateOrderByRelationAggregateInput
     payment?: PaymentOrderByWithRelationInput
@@ -9097,7 +9021,6 @@ export namespace Prisma {
     role?: EnumRoleFilter<"User"> | $Enums.Role
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    purchasedQuizzes?: QuizListRelationFilter
     createdQuizzes?: QuizListRelationFilter
     certificates?: CertificateListRelationFilter
     payment?: XOR<PaymentNullableScalarRelationFilter, PaymentWhereInput> | null
@@ -9213,7 +9136,6 @@ export namespace Prisma {
     creator?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     questions?: QuestionListRelationFilter
     certificates?: CertificateListRelationFilter
-    purchasers?: UserListRelationFilter
   }
 
   export type QuizOrderByWithRelationInput = {
@@ -9230,7 +9152,6 @@ export namespace Prisma {
     creator?: UserOrderByWithRelationInput
     questions?: QuestionOrderByRelationAggregateInput
     certificates?: CertificateOrderByRelationAggregateInput
-    purchasers?: UserOrderByRelationAggregateInput
     _relevance?: QuizOrderByRelevanceInput
   }
 
@@ -9251,7 +9172,6 @@ export namespace Prisma {
     creator?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     questions?: QuestionListRelationFilter
     certificates?: CertificateListRelationFilter
-    purchasers?: UserListRelationFilter
   }, "id">
 
   export type QuizOrderByWithAggregationInput = {
@@ -9594,7 +9514,6 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    purchasedQuizzes?: QuizCreateNestedManyWithoutPurchasersInput
     createdQuizzes?: QuizCreateNestedManyWithoutCreatorInput
     certificates?: CertificateCreateNestedManyWithoutUserInput
     payment?: PaymentCreateNestedOneWithoutUserInput
@@ -9610,7 +9529,6 @@ export namespace Prisma {
     paymentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    purchasedQuizzes?: QuizUncheckedCreateNestedManyWithoutPurchasersInput
     createdQuizzes?: QuizUncheckedCreateNestedManyWithoutCreatorInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutUserInput
   }
@@ -9623,7 +9541,6 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    purchasedQuizzes?: QuizUpdateManyWithoutPurchasersNestedInput
     createdQuizzes?: QuizUpdateManyWithoutCreatorNestedInput
     certificates?: CertificateUpdateManyWithoutUserNestedInput
     payment?: PaymentUpdateOneWithoutUserNestedInput
@@ -9639,7 +9556,6 @@ export namespace Prisma {
     paymentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    purchasedQuizzes?: QuizUncheckedUpdateManyWithoutPurchasersNestedInput
     createdQuizzes?: QuizUncheckedUpdateManyWithoutCreatorNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -9750,7 +9666,6 @@ export namespace Prisma {
     creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
     questions?: QuestionCreateNestedManyWithoutQuizInput
     certificates?: CertificateCreateNestedManyWithoutQuizInput
-    purchasers?: UserCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizUncheckedCreateInput = {
@@ -9765,7 +9680,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
-    purchasers?: UserUncheckedCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizUpdateInput = {
@@ -9779,7 +9693,6 @@ export namespace Prisma {
     creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
     questions?: QuestionUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type QuizUncheckedUpdateInput = {
@@ -9794,7 +9707,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUncheckedUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type QuizCreateManyInput = {
@@ -10431,17 +10343,7 @@ export namespace Prisma {
     none?: QuestionWhereInput
   }
 
-  export type UserListRelationFilter = {
-    every?: UserWhereInput
-    some?: UserWhereInput
-    none?: UserWhereInput
-  }
-
   export type QuestionOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10796,12 +10698,6 @@ export namespace Prisma {
     amount?: SortOrder
   }
 
-  export type QuizCreateNestedManyWithoutPurchasersInput = {
-    create?: XOR<QuizCreateWithoutPurchasersInput, QuizUncheckedCreateWithoutPurchasersInput> | QuizCreateWithoutPurchasersInput[] | QuizUncheckedCreateWithoutPurchasersInput[]
-    connectOrCreate?: QuizCreateOrConnectWithoutPurchasersInput | QuizCreateOrConnectWithoutPurchasersInput[]
-    connect?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-  }
-
   export type QuizCreateNestedManyWithoutCreatorInput = {
     create?: XOR<QuizCreateWithoutCreatorInput, QuizUncheckedCreateWithoutCreatorInput> | QuizCreateWithoutCreatorInput[] | QuizUncheckedCreateWithoutCreatorInput[]
     connectOrCreate?: QuizCreateOrConnectWithoutCreatorInput | QuizCreateOrConnectWithoutCreatorInput[]
@@ -10820,12 +10716,6 @@ export namespace Prisma {
     create?: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput>
     connectOrCreate?: PaymentCreateOrConnectWithoutUserInput
     connect?: PaymentWhereUniqueInput
-  }
-
-  export type QuizUncheckedCreateNestedManyWithoutPurchasersInput = {
-    create?: XOR<QuizCreateWithoutPurchasersInput, QuizUncheckedCreateWithoutPurchasersInput> | QuizCreateWithoutPurchasersInput[] | QuizUncheckedCreateWithoutPurchasersInput[]
-    connectOrCreate?: QuizCreateOrConnectWithoutPurchasersInput | QuizCreateOrConnectWithoutPurchasersInput[]
-    connect?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
   }
 
   export type QuizUncheckedCreateNestedManyWithoutCreatorInput = {
@@ -10856,19 +10746,6 @@ export namespace Prisma {
 
   export type DateTimeFieldUpdateOperationsInput = {
     set?: Date | string
-  }
-
-  export type QuizUpdateManyWithoutPurchasersNestedInput = {
-    create?: XOR<QuizCreateWithoutPurchasersInput, QuizUncheckedCreateWithoutPurchasersInput> | QuizCreateWithoutPurchasersInput[] | QuizUncheckedCreateWithoutPurchasersInput[]
-    connectOrCreate?: QuizCreateOrConnectWithoutPurchasersInput | QuizCreateOrConnectWithoutPurchasersInput[]
-    upsert?: QuizUpsertWithWhereUniqueWithoutPurchasersInput | QuizUpsertWithWhereUniqueWithoutPurchasersInput[]
-    set?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-    disconnect?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-    delete?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-    connect?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-    update?: QuizUpdateWithWhereUniqueWithoutPurchasersInput | QuizUpdateWithWhereUniqueWithoutPurchasersInput[]
-    updateMany?: QuizUpdateManyWithWhereWithoutPurchasersInput | QuizUpdateManyWithWhereWithoutPurchasersInput[]
-    deleteMany?: QuizScalarWhereInput | QuizScalarWhereInput[]
   }
 
   export type QuizUpdateManyWithoutCreatorNestedInput = {
@@ -10923,19 +10800,6 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
-  }
-
-  export type QuizUncheckedUpdateManyWithoutPurchasersNestedInput = {
-    create?: XOR<QuizCreateWithoutPurchasersInput, QuizUncheckedCreateWithoutPurchasersInput> | QuizCreateWithoutPurchasersInput[] | QuizUncheckedCreateWithoutPurchasersInput[]
-    connectOrCreate?: QuizCreateOrConnectWithoutPurchasersInput | QuizCreateOrConnectWithoutPurchasersInput[]
-    upsert?: QuizUpsertWithWhereUniqueWithoutPurchasersInput | QuizUpsertWithWhereUniqueWithoutPurchasersInput[]
-    set?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-    disconnect?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-    delete?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-    connect?: QuizWhereUniqueInput | QuizWhereUniqueInput[]
-    update?: QuizUpdateWithWhereUniqueWithoutPurchasersInput | QuizUpdateWithWhereUniqueWithoutPurchasersInput[]
-    updateMany?: QuizUpdateManyWithWhereWithoutPurchasersInput | QuizUpdateManyWithWhereWithoutPurchasersInput[]
-    deleteMany?: QuizScalarWhereInput | QuizScalarWhereInput[]
   }
 
   export type QuizUncheckedUpdateManyWithoutCreatorNestedInput = {
@@ -11076,12 +10940,6 @@ export namespace Prisma {
     connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
   }
 
-  export type UserCreateNestedManyWithoutPurchasedQuizzesInput = {
-    create?: XOR<UserCreateWithoutPurchasedQuizzesInput, UserUncheckedCreateWithoutPurchasedQuizzesInput> | UserCreateWithoutPurchasedQuizzesInput[] | UserUncheckedCreateWithoutPurchasedQuizzesInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutPurchasedQuizzesInput | UserCreateOrConnectWithoutPurchasedQuizzesInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-  }
-
   export type QuestionUncheckedCreateNestedManyWithoutQuizInput = {
     create?: XOR<QuestionCreateWithoutQuizInput, QuestionUncheckedCreateWithoutQuizInput> | QuestionCreateWithoutQuizInput[] | QuestionUncheckedCreateWithoutQuizInput[]
     connectOrCreate?: QuestionCreateOrConnectWithoutQuizInput | QuestionCreateOrConnectWithoutQuizInput[]
@@ -11094,12 +10952,6 @@ export namespace Prisma {
     connectOrCreate?: CertificateCreateOrConnectWithoutQuizInput | CertificateCreateOrConnectWithoutQuizInput[]
     createMany?: CertificateCreateManyQuizInputEnvelope
     connect?: CertificateWhereUniqueInput | CertificateWhereUniqueInput[]
-  }
-
-  export type UserUncheckedCreateNestedManyWithoutPurchasedQuizzesInput = {
-    create?: XOR<UserCreateWithoutPurchasedQuizzesInput, UserUncheckedCreateWithoutPurchasedQuizzesInput> | UserCreateWithoutPurchasedQuizzesInput[] | UserUncheckedCreateWithoutPurchasedQuizzesInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutPurchasedQuizzesInput | UserCreateOrConnectWithoutPurchasedQuizzesInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
   }
 
   export type TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput = {
@@ -11148,19 +11000,6 @@ export namespace Prisma {
     deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
   }
 
-  export type UserUpdateManyWithoutPurchasedQuizzesNestedInput = {
-    create?: XOR<UserCreateWithoutPurchasedQuizzesInput, UserUncheckedCreateWithoutPurchasedQuizzesInput> | UserCreateWithoutPurchasedQuizzesInput[] | UserUncheckedCreateWithoutPurchasedQuizzesInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutPurchasedQuizzesInput | UserCreateOrConnectWithoutPurchasedQuizzesInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutPurchasedQuizzesInput | UserUpsertWithWhereUniqueWithoutPurchasedQuizzesInput[]
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutPurchasedQuizzesInput | UserUpdateWithWhereUniqueWithoutPurchasedQuizzesInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutPurchasedQuizzesInput | UserUpdateManyWithWhereWithoutPurchasedQuizzesInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
-  }
-
   export type QuestionUncheckedUpdateManyWithoutQuizNestedInput = {
     create?: XOR<QuestionCreateWithoutQuizInput, QuestionUncheckedCreateWithoutQuizInput> | QuestionCreateWithoutQuizInput[] | QuestionUncheckedCreateWithoutQuizInput[]
     connectOrCreate?: QuestionCreateOrConnectWithoutQuizInput | QuestionCreateOrConnectWithoutQuizInput[]
@@ -11187,19 +11026,6 @@ export namespace Prisma {
     update?: CertificateUpdateWithWhereUniqueWithoutQuizInput | CertificateUpdateWithWhereUniqueWithoutQuizInput[]
     updateMany?: CertificateUpdateManyWithWhereWithoutQuizInput | CertificateUpdateManyWithWhereWithoutQuizInput[]
     deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
-  }
-
-  export type UserUncheckedUpdateManyWithoutPurchasedQuizzesNestedInput = {
-    create?: XOR<UserCreateWithoutPurchasedQuizzesInput, UserUncheckedCreateWithoutPurchasedQuizzesInput> | UserCreateWithoutPurchasedQuizzesInput[] | UserUncheckedCreateWithoutPurchasedQuizzesInput[]
-    connectOrCreate?: UserCreateOrConnectWithoutPurchasedQuizzesInput | UserCreateOrConnectWithoutPurchasedQuizzesInput[]
-    upsert?: UserUpsertWithWhereUniqueWithoutPurchasedQuizzesInput | UserUpsertWithWhereUniqueWithoutPurchasedQuizzesInput[]
-    set?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    disconnect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    delete?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    connect?: UserWhereUniqueInput | UserWhereUniqueInput[]
-    update?: UserUpdateWithWhereUniqueWithoutPurchasedQuizzesInput | UserUpdateWithWhereUniqueWithoutPurchasedQuizzesInput[]
-    updateMany?: UserUpdateManyWithWhereWithoutPurchasedQuizzesInput | UserUpdateManyWithWhereWithoutPurchasedQuizzesInput[]
-    deleteMany?: UserScalarWhereInput | UserScalarWhereInput[]
   }
 
   export type QuizCreateNestedOneWithoutQuestionsInput = {
@@ -11521,38 +11347,6 @@ export namespace Prisma {
     _max?: NestedFloatFilter<$PrismaModel>
   }
 
-  export type QuizCreateWithoutPurchasersInput = {
-    title: string
-    passingScore?: number
-    totalPoints: number
-    timeLimit?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    category: TestCategoryCreateNestedOneWithoutQuizzesInput
-    creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
-    questions?: QuestionCreateNestedManyWithoutQuizInput
-    certificates?: CertificateCreateNestedManyWithoutQuizInput
-  }
-
-  export type QuizUncheckedCreateWithoutPurchasersInput = {
-    id?: number
-    title: string
-    passingScore?: number
-    totalPoints: number
-    timeLimit?: number | null
-    categoryId: number
-    creatorId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
-  }
-
-  export type QuizCreateOrConnectWithoutPurchasersInput = {
-    where: QuizWhereUniqueInput
-    create: XOR<QuizCreateWithoutPurchasersInput, QuizUncheckedCreateWithoutPurchasersInput>
-  }
-
   export type QuizCreateWithoutCreatorInput = {
     title: string
     passingScore?: number
@@ -11563,7 +11357,6 @@ export namespace Prisma {
     category: TestCategoryCreateNestedOneWithoutQuizzesInput
     questions?: QuestionCreateNestedManyWithoutQuizInput
     certificates?: CertificateCreateNestedManyWithoutQuizInput
-    purchasers?: UserCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizUncheckedCreateWithoutCreatorInput = {
@@ -11577,7 +11370,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
-    purchasers?: UserUncheckedCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizCreateOrConnectWithoutCreatorInput = {
@@ -11653,20 +11445,20 @@ export namespace Prisma {
     create: XOR<PaymentCreateWithoutUserInput, PaymentUncheckedCreateWithoutUserInput>
   }
 
-  export type QuizUpsertWithWhereUniqueWithoutPurchasersInput = {
+  export type QuizUpsertWithWhereUniqueWithoutCreatorInput = {
     where: QuizWhereUniqueInput
-    update: XOR<QuizUpdateWithoutPurchasersInput, QuizUncheckedUpdateWithoutPurchasersInput>
-    create: XOR<QuizCreateWithoutPurchasersInput, QuizUncheckedCreateWithoutPurchasersInput>
+    update: XOR<QuizUpdateWithoutCreatorInput, QuizUncheckedUpdateWithoutCreatorInput>
+    create: XOR<QuizCreateWithoutCreatorInput, QuizUncheckedCreateWithoutCreatorInput>
   }
 
-  export type QuizUpdateWithWhereUniqueWithoutPurchasersInput = {
+  export type QuizUpdateWithWhereUniqueWithoutCreatorInput = {
     where: QuizWhereUniqueInput
-    data: XOR<QuizUpdateWithoutPurchasersInput, QuizUncheckedUpdateWithoutPurchasersInput>
+    data: XOR<QuizUpdateWithoutCreatorInput, QuizUncheckedUpdateWithoutCreatorInput>
   }
 
-  export type QuizUpdateManyWithWhereWithoutPurchasersInput = {
+  export type QuizUpdateManyWithWhereWithoutCreatorInput = {
     where: QuizScalarWhereInput
-    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyWithoutPurchasersInput>
+    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyWithoutCreatorInput>
   }
 
   export type QuizScalarWhereInput = {
@@ -11682,22 +11474,6 @@ export namespace Prisma {
     creatorId?: IntNullableFilter<"Quiz"> | number | null
     createdAt?: DateTimeFilter<"Quiz"> | Date | string
     updatedAt?: DateTimeFilter<"Quiz"> | Date | string
-  }
-
-  export type QuizUpsertWithWhereUniqueWithoutCreatorInput = {
-    where: QuizWhereUniqueInput
-    update: XOR<QuizUpdateWithoutCreatorInput, QuizUncheckedUpdateWithoutCreatorInput>
-    create: XOR<QuizCreateWithoutCreatorInput, QuizUncheckedCreateWithoutCreatorInput>
-  }
-
-  export type QuizUpdateWithWhereUniqueWithoutCreatorInput = {
-    where: QuizWhereUniqueInput
-    data: XOR<QuizUpdateWithoutCreatorInput, QuizUncheckedUpdateWithoutCreatorInput>
-  }
-
-  export type QuizUpdateManyWithWhereWithoutCreatorInput = {
-    where: QuizScalarWhereInput
-    data: XOR<QuizUpdateManyMutationInput, QuizUncheckedUpdateManyWithoutCreatorInput>
   }
 
   export type CertificateUpsertWithWhereUniqueWithoutUserInput = {
@@ -11779,7 +11555,6 @@ export namespace Prisma {
     creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
     questions?: QuestionCreateNestedManyWithoutQuizInput
     certificates?: CertificateCreateNestedManyWithoutQuizInput
-    purchasers?: UserCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizUncheckedCreateWithoutCategoryInput = {
@@ -11793,7 +11568,6 @@ export namespace Prisma {
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
-    purchasers?: UserUncheckedCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizCreateOrConnectWithoutCategoryInput = {
@@ -11899,7 +11673,6 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    purchasedQuizzes?: QuizCreateNestedManyWithoutPurchasersInput
     certificates?: CertificateCreateNestedManyWithoutUserInput
     payment?: PaymentCreateNestedOneWithoutUserInput
   }
@@ -11914,7 +11687,6 @@ export namespace Prisma {
     paymentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    purchasedQuizzes?: QuizUncheckedCreateNestedManyWithoutPurchasersInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -11979,38 +11751,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type UserCreateWithoutPurchasedQuizzesInput = {
-    name: string
-    email: string
-    password: string
-    phone?: string | null
-    role?: $Enums.Role
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdQuizzes?: QuizCreateNestedManyWithoutCreatorInput
-    certificates?: CertificateCreateNestedManyWithoutUserInput
-    payment?: PaymentCreateNestedOneWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutPurchasedQuizzesInput = {
-    id?: number
-    name: string
-    email: string
-    password: string
-    phone?: string | null
-    role?: $Enums.Role
-    paymentId?: number | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    createdQuizzes?: QuizUncheckedCreateNestedManyWithoutCreatorInput
-    certificates?: CertificateUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutPurchasedQuizzesInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutPurchasedQuizzesInput, UserUncheckedCreateWithoutPurchasedQuizzesInput>
-  }
-
   export type TestCategoryUpsertWithoutQuizzesInput = {
     update: XOR<TestCategoryUpdateWithoutQuizzesInput, TestCategoryUncheckedUpdateWithoutQuizzesInput>
     create: XOR<TestCategoryCreateWithoutQuizzesInput, TestCategoryUncheckedCreateWithoutQuizzesInput>
@@ -12058,7 +11798,6 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    purchasedQuizzes?: QuizUpdateManyWithoutPurchasersNestedInput
     certificates?: CertificateUpdateManyWithoutUserNestedInput
     payment?: PaymentUpdateOneWithoutUserNestedInput
   }
@@ -12073,7 +11812,6 @@ export namespace Prisma {
     paymentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    purchasedQuizzes?: QuizUncheckedUpdateManyWithoutPurchasersNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -12121,37 +11859,6 @@ export namespace Prisma {
     data: XOR<CertificateUpdateManyMutationInput, CertificateUncheckedUpdateManyWithoutQuizInput>
   }
 
-  export type UserUpsertWithWhereUniqueWithoutPurchasedQuizzesInput = {
-    where: UserWhereUniqueInput
-    update: XOR<UserUpdateWithoutPurchasedQuizzesInput, UserUncheckedUpdateWithoutPurchasedQuizzesInput>
-    create: XOR<UserCreateWithoutPurchasedQuizzesInput, UserUncheckedCreateWithoutPurchasedQuizzesInput>
-  }
-
-  export type UserUpdateWithWhereUniqueWithoutPurchasedQuizzesInput = {
-    where: UserWhereUniqueInput
-    data: XOR<UserUpdateWithoutPurchasedQuizzesInput, UserUncheckedUpdateWithoutPurchasedQuizzesInput>
-  }
-
-  export type UserUpdateManyWithWhereWithoutPurchasedQuizzesInput = {
-    where: UserScalarWhereInput
-    data: XOR<UserUpdateManyMutationInput, UserUncheckedUpdateManyWithoutPurchasedQuizzesInput>
-  }
-
-  export type UserScalarWhereInput = {
-    AND?: UserScalarWhereInput | UserScalarWhereInput[]
-    OR?: UserScalarWhereInput[]
-    NOT?: UserScalarWhereInput | UserScalarWhereInput[]
-    id?: IntFilter<"User"> | number
-    name?: StringFilter<"User"> | string
-    email?: StringFilter<"User"> | string
-    password?: StringFilter<"User"> | string
-    phone?: StringNullableFilter<"User"> | string | null
-    role?: EnumRoleFilter<"User"> | $Enums.Role
-    paymentId?: IntNullableFilter<"User"> | number | null
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
-  }
-
   export type QuizCreateWithoutQuestionsInput = {
     title: string
     passingScore?: number
@@ -12162,7 +11869,6 @@ export namespace Prisma {
     category: TestCategoryCreateNestedOneWithoutQuizzesInput
     creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
     certificates?: CertificateCreateNestedManyWithoutQuizInput
-    purchasers?: UserCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizUncheckedCreateWithoutQuestionsInput = {
@@ -12176,7 +11882,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
-    purchasers?: UserUncheckedCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizCreateOrConnectWithoutQuestionsInput = {
@@ -12205,7 +11910,6 @@ export namespace Prisma {
     category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
     creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
     certificates?: CertificateUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutQuestionsInput = {
@@ -12219,7 +11923,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUncheckedUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type UserCreateWithoutCertificatesInput = {
@@ -12230,7 +11933,6 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    purchasedQuizzes?: QuizCreateNestedManyWithoutPurchasersInput
     createdQuizzes?: QuizCreateNestedManyWithoutCreatorInput
     payment?: PaymentCreateNestedOneWithoutUserInput
   }
@@ -12245,7 +11947,6 @@ export namespace Prisma {
     paymentId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    purchasedQuizzes?: QuizUncheckedCreateNestedManyWithoutPurchasersInput
     createdQuizzes?: QuizUncheckedCreateNestedManyWithoutCreatorInput
   }
 
@@ -12286,7 +11987,6 @@ export namespace Prisma {
     category: TestCategoryCreateNestedOneWithoutQuizzesInput
     creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
     questions?: QuestionCreateNestedManyWithoutQuizInput
-    purchasers?: UserCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizUncheckedCreateWithoutCertificatesInput = {
@@ -12300,7 +12000,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
-    purchasers?: UserUncheckedCreateNestedManyWithoutPurchasedQuizzesInput
   }
 
   export type QuizCreateOrConnectWithoutCertificatesInput = {
@@ -12327,7 +12026,6 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    purchasedQuizzes?: QuizUpdateManyWithoutPurchasersNestedInput
     createdQuizzes?: QuizUpdateManyWithoutCreatorNestedInput
     payment?: PaymentUpdateOneWithoutUserNestedInput
   }
@@ -12342,7 +12040,6 @@ export namespace Prisma {
     paymentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    purchasedQuizzes?: QuizUncheckedUpdateManyWithoutPurchasersNestedInput
     createdQuizzes?: QuizUncheckedUpdateManyWithoutCreatorNestedInput
   }
 
@@ -12395,7 +12092,6 @@ export namespace Prisma {
     category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
     creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
     questions?: QuestionUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutCertificatesInput = {
@@ -12409,7 +12105,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUncheckedUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type UserCreateWithoutPaymentInput = {
@@ -12420,7 +12115,6 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    purchasedQuizzes?: QuizCreateNestedManyWithoutPurchasersInput
     createdQuizzes?: QuizCreateNestedManyWithoutCreatorInput
     certificates?: CertificateCreateNestedManyWithoutUserInput
   }
@@ -12434,7 +12128,6 @@ export namespace Prisma {
     role?: $Enums.Role
     createdAt?: Date | string
     updatedAt?: Date | string
-    purchasedQuizzes?: QuizUncheckedCreateNestedManyWithoutPurchasersInput
     createdQuizzes?: QuizUncheckedCreateNestedManyWithoutCreatorInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutUserInput
   }
@@ -12463,7 +12156,6 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    purchasedQuizzes?: QuizUpdateManyWithoutPurchasersNestedInput
     createdQuizzes?: QuizUpdateManyWithoutCreatorNestedInput
     certificates?: CertificateUpdateManyWithoutUserNestedInput
   }
@@ -12477,7 +12169,6 @@ export namespace Prisma {
     role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    purchasedQuizzes?: QuizUncheckedUpdateManyWithoutPurchasersNestedInput
     createdQuizzes?: QuizUncheckedUpdateManyWithoutCreatorNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -12504,45 +12195,6 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
-  export type QuizUpdateWithoutPurchasersInput = {
-    title?: StringFieldUpdateOperationsInput | string
-    passingScore?: IntFieldUpdateOperationsInput | number
-    totalPoints?: IntFieldUpdateOperationsInput | number
-    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
-    creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
-    questions?: QuestionUpdateManyWithoutQuizNestedInput
-    certificates?: CertificateUpdateManyWithoutQuizNestedInput
-  }
-
-  export type QuizUncheckedUpdateWithoutPurchasersInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    passingScore?: IntFieldUpdateOperationsInput | number
-    totalPoints?: IntFieldUpdateOperationsInput | number
-    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
-    categoryId?: IntFieldUpdateOperationsInput | number
-    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
-  }
-
-  export type QuizUncheckedUpdateManyWithoutPurchasersInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
-    passingScore?: IntFieldUpdateOperationsInput | number
-    totalPoints?: IntFieldUpdateOperationsInput | number
-    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
-    categoryId?: IntFieldUpdateOperationsInput | number
-    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type QuizUpdateWithoutCreatorInput = {
     title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
@@ -12553,7 +12205,6 @@ export namespace Prisma {
     category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
     questions?: QuestionUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutCreatorInput = {
@@ -12567,7 +12218,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUncheckedUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type QuizUncheckedUpdateManyWithoutCreatorInput = {
@@ -12645,7 +12295,6 @@ export namespace Prisma {
     creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
     questions?: QuestionUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutCategoryInput = {
@@ -12659,7 +12308,6 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
-    purchasers?: UserUncheckedUpdateManyWithoutPurchasedQuizzesNestedInput
   }
 
   export type QuizUncheckedUpdateManyWithoutCategoryInput = {
@@ -12775,45 +12423,6 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     certificateID?: StringFieldUpdateOperationsInput | string
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type UserUpdateWithoutPurchasedQuizzesInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdQuizzes?: QuizUpdateManyWithoutCreatorNestedInput
-    certificates?: CertificateUpdateManyWithoutUserNestedInput
-    payment?: PaymentUpdateOneWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutPurchasedQuizzesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    paymentId?: NullableIntFieldUpdateOperationsInput | number | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    createdQuizzes?: QuizUncheckedUpdateManyWithoutCreatorNestedInput
-    certificates?: CertificateUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateManyWithoutPurchasedQuizzesInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    phone?: NullableStringFieldUpdateOperationsInput | string | null
-    role?: EnumRoleFieldUpdateOperationsInput | $Enums.Role
-    paymentId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

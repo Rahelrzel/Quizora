@@ -7,7 +7,11 @@ const {
   deleteQuiz,
   submitQuiz,
 } = require("../controllers/quiz.controller");
-const { protect: auth, admin } = require("../middlewares/auth.middleware");
+const {
+  protect: auth,
+  admin,
+  optionalProtect,
+} = require("../middlewares/auth.middleware");
 const validateBody = require("../middlewares/validateBody.middleware");
 const validateId = require("../middlewares/validateParams.middleware");
 const {
@@ -24,7 +28,7 @@ router
 
 router
   .route("/:id")
-  .get(validateId("id"), getQuizById)
+  .get(validateId("id"), optionalProtect, getQuizById)
   .put(
     auth,
     admin,

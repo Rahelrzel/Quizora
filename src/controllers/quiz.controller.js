@@ -35,7 +35,7 @@ const getQuizById = async (req, res, next) => {
     const quizId = parseInt(req.params.id, 10);
 
     const quiz = await prisma.quiz.findUnique({
-      where: { id: quizId }, // FIX: use parsed Int ID
+      where: { id: quizId },
       include: {
         category: {
           select: { name: true, description: true },
@@ -43,6 +43,9 @@ const getQuizById = async (req, res, next) => {
         creator: {
           select: { name: true },
         },
+        // Only include questions if the user has paid or is the creator/admin
+        // Note: For simplicity, we'll fetch them and then filter in the response
+        // OR we can fetch them separately if authorized.
         questions: true,
       },
     });
@@ -50,6 +53,17 @@ const getQuizById = async (req, res, next) => {
     if (!quiz) {
       return next(new HttpError({ status: 404, message: "Quiz not found" }));
     }
+
+    // Sanitize response: Remove questions if user is not authorized (not paid and not admin/creator)
+    // We need to check if req.user exists (from auth middleware)
+    const isPaid = req.user && req.user.paymentId;
+    const isAdmin = req.user && req.user.role === "admin";
+
+    if (!isPaid && !isAdmin) {
+      delete quiz.questions;
+      quiz.requiresPayment = true;
+    }
+
     res.json(quiz);
   } catch (error) {
     next(error);
@@ -151,12 +165,13 @@ const deleteQuiz = async (req, res, next) => {
 // @access  Private
 const submitQuiz = async (req, res, next) => {
   try {
-    // FIX (business rule): require successful payment before quiz submission
+    // ONE-TIME GLOBAL PAYMENT RULE:
+    // If a user has a successful payment (paymentId is set), they can access ALL quizzes.
     if (!req.user.paymentId) {
       return next(
         new HttpError({
           status: 403,
-          message: "Payment required to submit quiz",
+          message: "Payment required to access quizzes",
         }),
       );
     }

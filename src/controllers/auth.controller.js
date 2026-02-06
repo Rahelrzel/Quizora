@@ -95,7 +95,6 @@ const getAllUsers = async (req, res, next) => {
         },
         _count: {
           select: {
-            purchasedQuizzes: true,
             certificates: true,
           },
         },
@@ -108,7 +107,6 @@ const getAllUsers = async (req, res, next) => {
       email: user.email,
       phone: user.phone,
       paymentStatus: user.payment ? user.payment.status : "pending",
-      purchasedQuizzesCount: user._count.purchasedQuizzes,
       certificatesCount: user._count.certificates,
       createdAt: user.createdAt,
     }));

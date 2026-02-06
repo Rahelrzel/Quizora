@@ -15,7 +15,6 @@
     password         String
     phone            String?
     role             Role          @default(user)
-    purchasedQuizzes Quiz[]        @relation("UserPurchases")
     createdQuizzes   Quiz[]        @relation("UserCreations")
     certificates     Certificate[]
     paymentId        Int?          @unique // null by default, set once the user pays
@@ -55,7 +54,6 @@
     creator      User?         @relation("UserCreations", fields: [creatorId], references: [id])
     questions    Question[]
     certificates Certificate[]
-    purchasers   User[]        @relation("UserPurchases")
     createdAt    DateTime      @default(now())
     updatedAt    DateTime      @updatedAt
 
