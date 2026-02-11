@@ -65,13 +65,16 @@ app.use("/api/quizzes", require("./routes/quiz.routes"));
 app.use("/api/courses", require("./routes/course.routes"));
 app.use("/api/payments", paymentRoutes);
 app.use("/api/certificates", require("./routes/certificate.routes"));
+app.use("/api/chat", require("./routes/chat.routes"));
 
 app.get("/", (req, res) => {
   res.send("API is running...");
 });
 
 // 404 — must be after all route registrations so unmatched paths return JSON
-app.use((req, res, next) => next(new HttpError({ status: 404, message: "Not found" })));
+app.use((req, res, next) =>
+  next(new HttpError({ status: 404, message: "Not found" })),
+);
 
 app.use(errorHandler);
 
