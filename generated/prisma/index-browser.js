@@ -143,7 +143,6 @@ exports.Prisma.TestCategoryScalarFieldEnum = {
 
 exports.Prisma.QuizScalarFieldEnum = {
   id: 'id',
-  title: 'title',
   passingScore: 'passingScore',
   totalPoints: 'totalPoints',
   timeLimit: 'timeLimit',
@@ -153,13 +152,31 @@ exports.Prisma.QuizScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.QuizTranslationScalarFieldEnum = {
+  id: 'id',
+  quizId: 'quizId',
+  language: 'language',
+  title: 'title',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.QuestionScalarFieldEnum = {
   id: 'id',
   quizId: 'quizId',
+  correctAnswerIndex: 'correctAnswerIndex'
+};
+
+exports.Prisma.QuestionTranslationScalarFieldEnum = {
+  id: 'id',
+  questionId: 'questionId',
+  language: 'language',
   questionText: 'questionText',
   options: 'options',
-  correctAnswerIndex: 'correctAnswerIndex',
-  explanation: 'explanation'
+  explanation: 'explanation',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.CourseScalarFieldEnum = {
@@ -224,8 +241,9 @@ exports.Prisma.TestCategoryOrderByRelevanceFieldEnum = {
   description: 'description'
 };
 
-exports.Prisma.QuizOrderByRelevanceFieldEnum = {
-  title: 'title'
+exports.Prisma.QuizTranslationOrderByRelevanceFieldEnum = {
+  title: 'title',
+  description: 'description'
 };
 
 exports.Prisma.JsonNullValueFilter = {
@@ -239,7 +257,7 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
-exports.Prisma.QuestionOrderByRelevanceFieldEnum = {
+exports.Prisma.QuestionTranslationOrderByRelevanceFieldEnum = {
   questionText: 'questionText',
   explanation: 'explanation'
 };
@@ -268,11 +286,21 @@ exports.Role = exports.$Enums.Role = {
   admin: 'admin'
 };
 
+exports.Language = exports.$Enums.Language = {
+  en: 'en',
+  fr: 'fr',
+  es: 'es',
+  de: 'de',
+  ar: 'ar'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   TestCategory: 'TestCategory',
   Quiz: 'Quiz',
+  QuizTranslation: 'QuizTranslation',
   Question: 'Question',
+  QuestionTranslation: 'QuestionTranslation',
   Course: 'Course',
   Certificate: 'Certificate',
   Payment: 'Payment'

@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const prisma = require("../config/prisma");
 const HttpError = require("../utils/HttpError");
 
@@ -6,7 +7,7 @@ const HttpError = require("../utils/HttpError");
 // @access  Public
 const getQuizzes = async (req, res, next) => {
   try {
-    const { categoryId } = req.query;
+    const { categoryId, lang = "en" } = req.query;
     const where = categoryId ? { categoryId: parseInt(categoryId) } : {};
 
     const quizzes = await prisma.quiz.findMany({
@@ -18,9 +19,34 @@ const getQuizzes = async (req, res, next) => {
         creator: {
           select: { name: true },
         },
+        translations: {
+          where: {
+            OR: [{ language: lang }, { language: "en" }],
+          },
+        },
       },
     });
-    res.json(quizzes);
+
+    const formattedQuizzes = quizzes.map((quiz) => {
+      // Find requested translation or fallback to en
+      const translation =
+        quiz.translations.find((t) => t.language === lang) ||
+        quiz.translations.find((t) => t.language === "en") ||
+        quiz.translations[0];
+
+      return {
+        id: quiz.id,
+        title: translation?.title || "Untitled",
+        description: translation?.description,
+        passingScore: quiz.passingScore,
+        totalPoints: quiz.totalPoints,
+        timeLimit: quiz.timeLimit,
+        categoryId: quiz.categoryId,
+        category: quiz.category,
+      };
+    });
+
+    res.json(formattedQuizzes);
   } catch (error) {
     next(error);
   }
@@ -31,22 +57,26 @@ const getQuizzes = async (req, res, next) => {
 // @access  Public
 const getQuizById = async (req, res, next) => {
   try {
-    // FIX: Prisma expects Int ID, convert param string to number
     const quizId = parseInt(req.params.id, 10);
+    const lang = req.query.lang || "en";
 
     const quiz = await prisma.quiz.findUnique({
       where: { id: quizId },
       include: {
-        category: {
-          select: { name: true, description: true },
+        translations: {
+          where: {
+            language: { in: [lang, "en"] },
+          },
         },
-        creator: {
-          select: { name: true },
+        questions: {
+          include: {
+            translations: {
+              where: {
+                language: { in: [lang, "en"] },
+              },
+            },
+          },
         },
-        // Only include questions if the user has paid or is the creator/admin
-        // Note: For simplicity, we'll fetch them and then filter in the response
-        // OR we can fetch them separately if authorized.
-        questions: true,
       },
     });
 
@@ -54,17 +84,44 @@ const getQuizById = async (req, res, next) => {
       return next(new HttpError({ status: 404, message: "Quiz not found" }));
     }
 
-    // Sanitize response: Remove questions if user is not authorized (not paid and not admin/creator)
-    // We need to check if req.user exists (from auth middleware)
+    // Helper to find translation with fallback to English
+    const getBestTranslation = (translations, targetLang) => {
+      return (
+        translations.find((t) => t.language === targetLang) ||
+        translations.find((t) => t.language === "en") ||
+        translations[0]
+      );
+    };
+
+    const quizTranslation = getBestTranslation(quiz.translations, lang);
+
+    // Filter questions based on access (admin or paid)
     const isPaid = req.user && req.user.paymentId;
     const isAdmin = req.user && req.user.role === "admin";
+    const canSeeQuestions = isPaid || isAdmin;
 
-    if (!isPaid && !isAdmin) {
-      delete quiz.questions;
-      quiz.requiresPayment = true;
-    }
+    const formattedQuestions = canSeeQuestions
+      ? quiz.questions.map((q) => {
+          const qTrans = getBestTranslation(q.translations, lang);
+          return {
+            id: q.id,
+            questionText: qTrans?.questionText || "",
+            options: qTrans?.options || [],
+            explanation: qTrans?.explanation || null,
+          };
+        })
+      : [];
 
-    res.json(quiz);
+    // Return the clean flattened response
+    const response = {
+      id: quiz.id,
+      title: quizTranslation?.title || "Untitled",
+      description: quizTranslation?.description || "",
+      passingScore: quiz.passingScore,
+      questions: formattedQuestions,
+    };
+
+    res.json(response);
   } catch (error) {
     next(error);
   }
@@ -75,21 +132,58 @@ const getQuizById = async (req, res, next) => {
 // @access  Admin
 const createQuiz = async (req, res, next) => {
   try {
-    const { questions, categoryId, ...rest } = req.body;
+    const {
+      questions,
+      categoryId,
+      translations,
+      passingScore,
+      totalPoints,
+      timeLimit,
+    } = req.body;
 
-    const quiz = await prisma.quiz.create({
-      data: {
-        ...rest,
-        categoryId: parseInt(categoryId),
-        creatorId: req.user.id,
-        questions: {
-          create: questions,
-        },
-      },
-      include: {
-        questions: true,
-      },
+    // Validate correctAnswerIndex within options length for each translation
+    questions.forEach((q, qIndex) => {
+      q.translations.forEach((t) => {
+        if (q.correctAnswerIndex >= t.options.length) {
+          throw new HttpError(
+            `Correct answer index ${q.correctAnswerIndex} is out of bounds for question ${qIndex + 1} in language ${t.language}`,
+            400,
+          );
+        }
+      });
     });
+
+    const quiz = await prisma.$transaction(async (tx) => {
+      return await tx.quiz.create({
+        data: {
+          passingScore: passingScore || 70,
+          totalPoints: totalPoints,
+          timeLimit: timeLimit,
+          categoryId: parseInt(categoryId),
+          creatorId: req.user.id,
+          translations: {
+            create: translations,
+          },
+          questions: {
+            create: questions.map((q) => ({
+              correctAnswerIndex: q.correctAnswerIndex,
+              translations: {
+                create: q.translations,
+              },
+            })),
+          },
+        },
+        include: {
+          translations: true,
+          questions: {
+            include: {
+              translations: true,
+            },
+          },
+        },
+      });
+    });
+
     res.status(201).json(quiz);
   } catch (error) {
     next(error);
@@ -101,30 +195,50 @@ const createQuiz = async (req, res, next) => {
 // @access  Admin
 const updateQuiz = async (req, res, next) => {
   try {
-    // FIX: ensure numeric ID for Prisma
     const quizId = parseInt(req.params.id, 10);
+    const { questions, categoryId, translations, ...rest } = req.body;
 
-    const { questions, categoryId, ...rest } = req.body;
+    const quiz = await prisma.$transaction(async (tx) => {
+      // Update basic quiz info
+      const updatedQuiz = await tx.quiz.update({
+        where: { id: quizId },
+        data: {
+          ...rest,
+          categoryId: categoryId ? parseInt(categoryId) : undefined,
+        },
+      });
 
-    // Logic for updating questions might vary (replace all or update specific).
-    // For "minimal changes", we'll simulate replacement if questions are provided.
-    const data = { ...rest };
-    if (categoryId) data.categoryId = parseInt(categoryId);
+      // Update/Replace translations
+      if (translations) {
+        await tx.quizTranslation.deleteMany({ where: { quizId } });
+        await tx.quizTranslation.createMany({
+          data: translations.map((t) => ({ ...t, quizId })),
+        });
+      }
 
-    if (questions) {
-      // Delete existing questions first (simple replacement strategy)
-      await prisma.question.deleteMany({ where: { quizId } }); // FIX: numeric quizId
-      data.questions = {
-        create: questions,
-      };
-    }
+      // Update/Replace questions
+      if (questions) {
+        await tx.question.deleteMany({ where: { quizId } });
+        for (const q of questions) {
+          await tx.question.create({
+            data: {
+              quizId,
+              correctAnswerIndex: q.correctAnswerIndex,
+              translations: {
+                create: q.translations,
+              },
+            },
+          });
+        }
+      }
 
-    const quiz = await prisma.quiz.update({
-      where: { id: quizId }, // FIX: numeric quizId
-      data,
-      include: {
-        questions: true,
-      },
+      return await tx.quiz.findUnique({
+        where: { id: quizId },
+        include: {
+          translations: true,
+          questions: { include: { translations: true } },
+        },
+      });
     });
 
     if (!quiz) {
@@ -142,12 +256,11 @@ const updateQuiz = async (req, res, next) => {
 // @access  Admin
 const deleteQuiz = async (req, res, next) => {
   try {
-    // FIX: ensure numeric ID for Prisma delete
     const quizId = parseInt(req.params.id, 10);
 
-    // Cascade delete is handled by Prisma schema (onDelete: Cascade)
+    // Cascade delete handles QuizTranslation and Question (then QuestionTranslation)
     const quiz = await prisma.quiz.delete({
-      where: { id: quizId }, // FIX: numeric quizId
+      where: { id: quizId },
     });
 
     if (!quiz) {
@@ -178,11 +291,14 @@ const submitQuiz = async (req, res, next) => {
 
     // FIX: Prisma expects numeric quiz ID
     const quizId = parseInt(req.params.id, 10);
-
     const { answers } = req.body;
 
+    if (!answers || !Array.isArray(answers)) {
+      return next(new HttpError("Answers array is required", 400));
+    }
+
     const quiz = await prisma.quiz.findUnique({
-      where: { id: quizId }, // FIX: use parsed Int ID
+      where: { id: quizId },
       include: { questions: true },
     });
 
@@ -190,30 +306,51 @@ const submitQuiz = async (req, res, next) => {
       return next(new HttpError("Quiz not found", 404));
     }
 
-    let scorePoints = 0;
+    let correctCount = 0;
     const totalQuestions = quiz.questions.length;
+    const answeredQuestionIds = new Set();
 
-    if (!answers || !Array.isArray(answers)) {
-      return next(new HttpError("Answers array is required", 400));
-    }
+    // Use a Map for fast question lookup
+    const questionMap = new Map(quiz.questions.map((q) => [q.id, q]));
 
-    quiz.questions.forEach((question, index) => {
-      const userAnswerIndex = answers[index];
-      if (
-        userAnswerIndex !== undefined &&
-        userAnswerIndex === question.correctAnswerIndex
-      ) {
-        scorePoints++;
+    // Score based on questionId and selectedIndex
+    answers.forEach((answer) => {
+      // Convert questionId and selectedIndex to Number before comparison
+      // Safely handle strings or numbers sent from frontend
+      const qId = Number(answer.questionId);
+      const sIndex = Number(answer.selectedIndex);
+
+      // Safely ignore invalid or NaN values
+      if (isNaN(qId) || isNaN(sIndex)) {
+        return;
+      }
+
+      // Ignore duplicate questionIds in a single submission
+      if (answeredQuestionIds.has(qId)) {
+        return;
+      }
+
+      // Fast lookup using Map
+      const question = questionMap.get(qId);
+
+      if (question) {
+        answeredQuestionIds.add(qId);
+        if (sIndex === question.correctAnswerIndex) {
+          correctCount++;
+        }
       }
     });
 
-    const calculatedScore = (scorePoints / totalQuestions) * 100;
+    // Calculate score ONLY ONCE
+    // Formula: (correctCount / totalQuestions) * quiz.totalPoints
+    const calculatedScore =
+      totalQuestions > 0
+        ? (correctCount / totalQuestions) * quiz.totalPoints
+        : 0;
     const passed = calculatedScore >= quiz.passingScore;
     let certificateId = null;
 
     if (passed) {
-      const crypto = require("crypto");
-
       // Generate Unique ID
       const uniqueId = `CERT-${new Date().getFullYear()}-${crypto.randomBytes(4).toString("hex").toUpperCase()}`;
 
@@ -227,6 +364,11 @@ const submitQuiz = async (req, res, next) => {
 
       if (existingCert) {
         certificateId = existingCert.certificateID;
+        // Update the score on the existing certificate to match the current successful attempt
+        await prisma.certificate.update({
+          where: { id: existingCert.id },
+          data: { score: calculatedScore },
+        });
       } else {
         const cert = await prisma.certificate.create({
           data: {

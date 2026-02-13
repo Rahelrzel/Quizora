@@ -29,10 +29,20 @@ export type TestCategory = $Result.DefaultSelection<Prisma.$TestCategoryPayload>
  */
 export type Quiz = $Result.DefaultSelection<Prisma.$QuizPayload>
 /**
+ * Model QuizTranslation
+ * 
+ */
+export type QuizTranslation = $Result.DefaultSelection<Prisma.$QuizTranslationPayload>
+/**
  * Model Question
  * 
  */
 export type Question = $Result.DefaultSelection<Prisma.$QuestionPayload>
+/**
+ * Model QuestionTranslation
+ * 
+ */
+export type QuestionTranslation = $Result.DefaultSelection<Prisma.$QuestionTranslationPayload>
 /**
  * Model Course
  * 
@@ -60,11 +70,26 @@ export namespace $Enums {
 
 export type Role = (typeof Role)[keyof typeof Role]
 
+
+export const Language: {
+  en: 'en',
+  fr: 'fr',
+  es: 'es',
+  de: 'de',
+  ar: 'ar'
+};
+
+export type Language = (typeof Language)[keyof typeof Language]
+
 }
 
 export type Role = $Enums.Role
 
 export const Role: typeof $Enums.Role
+
+export type Language = $Enums.Language
+
+export const Language: typeof $Enums.Language
 
 /**
  * ##  Prisma Client ʲˢ
@@ -215,6 +240,16 @@ export class PrismaClient<
   get quiz(): Prisma.QuizDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.quizTranslation`: Exposes CRUD operations for the **QuizTranslation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more QuizTranslations
+    * const quizTranslations = await prisma.quizTranslation.findMany()
+    * ```
+    */
+  get quizTranslation(): Prisma.QuizTranslationDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.question`: Exposes CRUD operations for the **Question** model.
     * Example usage:
     * ```ts
@@ -223,6 +258,16 @@ export class PrismaClient<
     * ```
     */
   get question(): Prisma.QuestionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.questionTranslation`: Exposes CRUD operations for the **QuestionTranslation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more QuestionTranslations
+    * const questionTranslations = await prisma.questionTranslation.findMany()
+    * ```
+    */
+  get questionTranslation(): Prisma.QuestionTranslationDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.course`: Exposes CRUD operations for the **Course** model.
@@ -697,7 +742,9 @@ export namespace Prisma {
     User: 'User',
     TestCategory: 'TestCategory',
     Quiz: 'Quiz',
+    QuizTranslation: 'QuizTranslation',
     Question: 'Question',
+    QuestionTranslation: 'QuestionTranslation',
     Course: 'Course',
     Certificate: 'Certificate',
     Payment: 'Payment'
@@ -719,7 +766,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "testCategory" | "quiz" | "question" | "course" | "certificate" | "payment"
+      modelProps: "user" | "testCategory" | "quiz" | "quizTranslation" | "question" | "questionTranslation" | "course" | "certificate" | "payment"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -921,6 +968,72 @@ export namespace Prisma {
           }
         }
       }
+      QuizTranslation: {
+        payload: Prisma.$QuizTranslationPayload<ExtArgs>
+        fields: Prisma.QuizTranslationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.QuizTranslationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.QuizTranslationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload>
+          }
+          findFirst: {
+            args: Prisma.QuizTranslationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.QuizTranslationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload>
+          }
+          findMany: {
+            args: Prisma.QuizTranslationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload>[]
+          }
+          create: {
+            args: Prisma.QuizTranslationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload>
+          }
+          createMany: {
+            args: Prisma.QuizTranslationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.QuizTranslationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload>
+          }
+          update: {
+            args: Prisma.QuizTranslationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload>
+          }
+          deleteMany: {
+            args: Prisma.QuizTranslationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.QuizTranslationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.QuizTranslationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuizTranslationPayload>
+          }
+          aggregate: {
+            args: Prisma.QuizTranslationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateQuizTranslation>
+          }
+          groupBy: {
+            args: Prisma.QuizTranslationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<QuizTranslationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.QuizTranslationCountArgs<ExtArgs>
+            result: $Utils.Optional<QuizTranslationCountAggregateOutputType> | number
+          }
+        }
+      }
       Question: {
         payload: Prisma.$QuestionPayload<ExtArgs>
         fields: Prisma.QuestionFieldRefs
@@ -984,6 +1097,72 @@ export namespace Prisma {
           count: {
             args: Prisma.QuestionCountArgs<ExtArgs>
             result: $Utils.Optional<QuestionCountAggregateOutputType> | number
+          }
+        }
+      }
+      QuestionTranslation: {
+        payload: Prisma.$QuestionTranslationPayload<ExtArgs>
+        fields: Prisma.QuestionTranslationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.QuestionTranslationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.QuestionTranslationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload>
+          }
+          findFirst: {
+            args: Prisma.QuestionTranslationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.QuestionTranslationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload>
+          }
+          findMany: {
+            args: Prisma.QuestionTranslationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload>[]
+          }
+          create: {
+            args: Prisma.QuestionTranslationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload>
+          }
+          createMany: {
+            args: Prisma.QuestionTranslationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.QuestionTranslationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload>
+          }
+          update: {
+            args: Prisma.QuestionTranslationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload>
+          }
+          deleteMany: {
+            args: Prisma.QuestionTranslationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.QuestionTranslationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.QuestionTranslationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuestionTranslationPayload>
+          }
+          aggregate: {
+            args: Prisma.QuestionTranslationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateQuestionTranslation>
+          }
+          groupBy: {
+            args: Prisma.QuestionTranslationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<QuestionTranslationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.QuestionTranslationCountArgs<ExtArgs>
+            result: $Utils.Optional<QuestionTranslationCountAggregateOutputType> | number
           }
         }
       }
@@ -1284,7 +1463,9 @@ export namespace Prisma {
     user?: UserOmit
     testCategory?: TestCategoryOmit
     quiz?: QuizOmit
+    quizTranslation?: QuizTranslationOmit
     question?: QuestionOmit
+    questionTranslation?: QuestionTranslationOmit
     course?: CourseOmit
     certificate?: CertificateOmit
     payment?: PaymentOmit
@@ -1449,11 +1630,13 @@ export namespace Prisma {
 
   export type QuizCountOutputType = {
     questions: number
+    translations: number
     certificates: number
   }
 
   export type QuizCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     questions?: boolean | QuizCountOutputTypeCountQuestionsArgs
+    translations?: boolean | QuizCountOutputTypeCountTranslationsArgs
     certificates?: boolean | QuizCountOutputTypeCountCertificatesArgs
   }
 
@@ -1478,8 +1661,46 @@ export namespace Prisma {
   /**
    * QuizCountOutputType without action
    */
+  export type QuizCountOutputTypeCountTranslationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuizTranslationWhereInput
+  }
+
+  /**
+   * QuizCountOutputType without action
+   */
   export type QuizCountOutputTypeCountCertificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CertificateWhereInput
+  }
+
+
+  /**
+   * Count Type QuestionCountOutputType
+   */
+
+  export type QuestionCountOutputType = {
+    translations: number
+  }
+
+  export type QuestionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    translations?: boolean | QuestionCountOutputTypeCountTranslationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * QuestionCountOutputType without action
+   */
+  export type QuestionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionCountOutputType
+     */
+    select?: QuestionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * QuestionCountOutputType without action
+   */
+  export type QuestionCountOutputTypeCountTranslationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuestionTranslationWhereInput
   }
 
 
@@ -3624,7 +3845,6 @@ export namespace Prisma {
 
   export type QuizMinAggregateOutputType = {
     id: number | null
-    title: string | null
     passingScore: number | null
     totalPoints: number | null
     timeLimit: number | null
@@ -3636,7 +3856,6 @@ export namespace Prisma {
 
   export type QuizMaxAggregateOutputType = {
     id: number | null
-    title: string | null
     passingScore: number | null
     totalPoints: number | null
     timeLimit: number | null
@@ -3648,7 +3867,6 @@ export namespace Prisma {
 
   export type QuizCountAggregateOutputType = {
     id: number
-    title: number
     passingScore: number
     totalPoints: number
     timeLimit: number
@@ -3680,7 +3898,6 @@ export namespace Prisma {
 
   export type QuizMinAggregateInputType = {
     id?: true
-    title?: true
     passingScore?: true
     totalPoints?: true
     timeLimit?: true
@@ -3692,7 +3909,6 @@ export namespace Prisma {
 
   export type QuizMaxAggregateInputType = {
     id?: true
-    title?: true
     passingScore?: true
     totalPoints?: true
     timeLimit?: true
@@ -3704,7 +3920,6 @@ export namespace Prisma {
 
   export type QuizCountAggregateInputType = {
     id?: true
-    title?: true
     passingScore?: true
     totalPoints?: true
     timeLimit?: true
@@ -3803,7 +4018,6 @@ export namespace Prisma {
 
   export type QuizGroupByOutputType = {
     id: number
-    title: string
     passingScore: number
     totalPoints: number
     timeLimit: number | null
@@ -3834,7 +4048,6 @@ export namespace Prisma {
 
   export type QuizSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
-    title?: boolean
     passingScore?: boolean
     totalPoints?: boolean
     timeLimit?: boolean
@@ -3845,6 +4058,7 @@ export namespace Prisma {
     category?: boolean | TestCategoryDefaultArgs<ExtArgs>
     creator?: boolean | Quiz$creatorArgs<ExtArgs>
     questions?: boolean | Quiz$questionsArgs<ExtArgs>
+    translations?: boolean | Quiz$translationsArgs<ExtArgs>
     certificates?: boolean | Quiz$certificatesArgs<ExtArgs>
     _count?: boolean | QuizCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["quiz"]>
@@ -3853,7 +4067,6 @@ export namespace Prisma {
 
   export type QuizSelectScalar = {
     id?: boolean
-    title?: boolean
     passingScore?: boolean
     totalPoints?: boolean
     timeLimit?: boolean
@@ -3863,11 +4076,12 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type QuizOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "passingScore" | "totalPoints" | "timeLimit" | "categoryId" | "creatorId" | "createdAt" | "updatedAt", ExtArgs["result"]["quiz"]>
+  export type QuizOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "passingScore" | "totalPoints" | "timeLimit" | "categoryId" | "creatorId" | "createdAt" | "updatedAt", ExtArgs["result"]["quiz"]>
   export type QuizInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | TestCategoryDefaultArgs<ExtArgs>
     creator?: boolean | Quiz$creatorArgs<ExtArgs>
     questions?: boolean | Quiz$questionsArgs<ExtArgs>
+    translations?: boolean | Quiz$translationsArgs<ExtArgs>
     certificates?: boolean | Quiz$certificatesArgs<ExtArgs>
     _count?: boolean | QuizCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -3878,11 +4092,11 @@ export namespace Prisma {
       category: Prisma.$TestCategoryPayload<ExtArgs>
       creator: Prisma.$UserPayload<ExtArgs> | null
       questions: Prisma.$QuestionPayload<ExtArgs>[]
+      translations: Prisma.$QuizTranslationPayload<ExtArgs>[]
       certificates: Prisma.$CertificatePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
-      title: string
       passingScore: number
       totalPoints: number
       timeLimit: number | null
@@ -4233,6 +4447,7 @@ export namespace Prisma {
     category<T extends TestCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TestCategoryDefaultArgs<ExtArgs>>): Prisma__TestCategoryClient<$Result.GetResult<Prisma.$TestCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     creator<T extends Quiz$creatorArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$creatorArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     questions<T extends Quiz$questionsArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$questionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    translations<T extends Quiz$translationsArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$translationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     certificates<T extends Quiz$certificatesArgs<ExtArgs> = {}>(args?: Subset<T, Quiz$certificatesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CertificatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -4264,7 +4479,6 @@ export namespace Prisma {
    */
   interface QuizFieldRefs {
     readonly id: FieldRef<"Quiz", 'Int'>
-    readonly title: FieldRef<"Quiz", 'String'>
     readonly passingScore: FieldRef<"Quiz", 'Int'>
     readonly totalPoints: FieldRef<"Quiz", 'Int'>
     readonly timeLimit: FieldRef<"Quiz", 'Int'>
@@ -4658,6 +4872,30 @@ export namespace Prisma {
   }
 
   /**
+   * Quiz.translations
+   */
+  export type Quiz$translationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    where?: QuizTranslationWhereInput
+    orderBy?: QuizTranslationOrderByWithRelationInput | QuizTranslationOrderByWithRelationInput[]
+    cursor?: QuizTranslationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuizTranslationScalarFieldEnum | QuizTranslationScalarFieldEnum[]
+  }
+
+  /**
    * Quiz.certificates
    */
   export type Quiz$certificatesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4701,6 +4939,995 @@ export namespace Prisma {
 
 
   /**
+   * Model QuizTranslation
+   */
+
+  export type AggregateQuizTranslation = {
+    _count: QuizTranslationCountAggregateOutputType | null
+    _avg: QuizTranslationAvgAggregateOutputType | null
+    _sum: QuizTranslationSumAggregateOutputType | null
+    _min: QuizTranslationMinAggregateOutputType | null
+    _max: QuizTranslationMaxAggregateOutputType | null
+  }
+
+  export type QuizTranslationAvgAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+  }
+
+  export type QuizTranslationSumAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+  }
+
+  export type QuizTranslationMinAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+    language: $Enums.Language | null
+    title: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type QuizTranslationMaxAggregateOutputType = {
+    id: number | null
+    quizId: number | null
+    language: $Enums.Language | null
+    title: string | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type QuizTranslationCountAggregateOutputType = {
+    id: number
+    quizId: number
+    language: number
+    title: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type QuizTranslationAvgAggregateInputType = {
+    id?: true
+    quizId?: true
+  }
+
+  export type QuizTranslationSumAggregateInputType = {
+    id?: true
+    quizId?: true
+  }
+
+  export type QuizTranslationMinAggregateInputType = {
+    id?: true
+    quizId?: true
+    language?: true
+    title?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type QuizTranslationMaxAggregateInputType = {
+    id?: true
+    quizId?: true
+    language?: true
+    title?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type QuizTranslationCountAggregateInputType = {
+    id?: true
+    quizId?: true
+    language?: true
+    title?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type QuizTranslationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which QuizTranslation to aggregate.
+     */
+    where?: QuizTranslationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuizTranslations to fetch.
+     */
+    orderBy?: QuizTranslationOrderByWithRelationInput | QuizTranslationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: QuizTranslationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuizTranslations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuizTranslations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned QuizTranslations
+    **/
+    _count?: true | QuizTranslationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: QuizTranslationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: QuizTranslationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: QuizTranslationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: QuizTranslationMaxAggregateInputType
+  }
+
+  export type GetQuizTranslationAggregateType<T extends QuizTranslationAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuizTranslation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateQuizTranslation[P]>
+      : GetScalarType<T[P], AggregateQuizTranslation[P]>
+  }
+
+
+
+
+  export type QuizTranslationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuizTranslationWhereInput
+    orderBy?: QuizTranslationOrderByWithAggregationInput | QuizTranslationOrderByWithAggregationInput[]
+    by: QuizTranslationScalarFieldEnum[] | QuizTranslationScalarFieldEnum
+    having?: QuizTranslationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: QuizTranslationCountAggregateInputType | true
+    _avg?: QuizTranslationAvgAggregateInputType
+    _sum?: QuizTranslationSumAggregateInputType
+    _min?: QuizTranslationMinAggregateInputType
+    _max?: QuizTranslationMaxAggregateInputType
+  }
+
+  export type QuizTranslationGroupByOutputType = {
+    id: number
+    quizId: number
+    language: $Enums.Language
+    title: string
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: QuizTranslationCountAggregateOutputType | null
+    _avg: QuizTranslationAvgAggregateOutputType | null
+    _sum: QuizTranslationSumAggregateOutputType | null
+    _min: QuizTranslationMinAggregateOutputType | null
+    _max: QuizTranslationMaxAggregateOutputType | null
+  }
+
+  type GetQuizTranslationGroupByPayload<T extends QuizTranslationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<QuizTranslationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof QuizTranslationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], QuizTranslationGroupByOutputType[P]>
+            : GetScalarType<T[P], QuizTranslationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type QuizTranslationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    quizId?: boolean
+    language?: boolean
+    title?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["quizTranslation"]>
+
+
+
+  export type QuizTranslationSelectScalar = {
+    id?: boolean
+    quizId?: boolean
+    language?: boolean
+    title?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type QuizTranslationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quizId" | "language" | "title" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["quizTranslation"]>
+  export type QuizTranslationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    quiz?: boolean | QuizDefaultArgs<ExtArgs>
+  }
+
+  export type $QuizTranslationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "QuizTranslation"
+    objects: {
+      quiz: Prisma.$QuizPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      quizId: number
+      language: $Enums.Language
+      title: string
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["quizTranslation"]>
+    composites: {}
+  }
+
+  type QuizTranslationGetPayload<S extends boolean | null | undefined | QuizTranslationDefaultArgs> = $Result.GetResult<Prisma.$QuizTranslationPayload, S>
+
+  type QuizTranslationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<QuizTranslationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: QuizTranslationCountAggregateInputType | true
+    }
+
+  export interface QuizTranslationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['QuizTranslation'], meta: { name: 'QuizTranslation' } }
+    /**
+     * Find zero or one QuizTranslation that matches the filter.
+     * @param {QuizTranslationFindUniqueArgs} args - Arguments to find a QuizTranslation
+     * @example
+     * // Get one QuizTranslation
+     * const quizTranslation = await prisma.quizTranslation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends QuizTranslationFindUniqueArgs>(args: SelectSubset<T, QuizTranslationFindUniqueArgs<ExtArgs>>): Prisma__QuizTranslationClient<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one QuizTranslation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {QuizTranslationFindUniqueOrThrowArgs} args - Arguments to find a QuizTranslation
+     * @example
+     * // Get one QuizTranslation
+     * const quizTranslation = await prisma.quizTranslation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends QuizTranslationFindUniqueOrThrowArgs>(args: SelectSubset<T, QuizTranslationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__QuizTranslationClient<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first QuizTranslation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizTranslationFindFirstArgs} args - Arguments to find a QuizTranslation
+     * @example
+     * // Get one QuizTranslation
+     * const quizTranslation = await prisma.quizTranslation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends QuizTranslationFindFirstArgs>(args?: SelectSubset<T, QuizTranslationFindFirstArgs<ExtArgs>>): Prisma__QuizTranslationClient<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first QuizTranslation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizTranslationFindFirstOrThrowArgs} args - Arguments to find a QuizTranslation
+     * @example
+     * // Get one QuizTranslation
+     * const quizTranslation = await prisma.quizTranslation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends QuizTranslationFindFirstOrThrowArgs>(args?: SelectSubset<T, QuizTranslationFindFirstOrThrowArgs<ExtArgs>>): Prisma__QuizTranslationClient<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more QuizTranslations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizTranslationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all QuizTranslations
+     * const quizTranslations = await prisma.quizTranslation.findMany()
+     * 
+     * // Get first 10 QuizTranslations
+     * const quizTranslations = await prisma.quizTranslation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const quizTranslationWithIdOnly = await prisma.quizTranslation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends QuizTranslationFindManyArgs>(args?: SelectSubset<T, QuizTranslationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a QuizTranslation.
+     * @param {QuizTranslationCreateArgs} args - Arguments to create a QuizTranslation.
+     * @example
+     * // Create one QuizTranslation
+     * const QuizTranslation = await prisma.quizTranslation.create({
+     *   data: {
+     *     // ... data to create a QuizTranslation
+     *   }
+     * })
+     * 
+     */
+    create<T extends QuizTranslationCreateArgs>(args: SelectSubset<T, QuizTranslationCreateArgs<ExtArgs>>): Prisma__QuizTranslationClient<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many QuizTranslations.
+     * @param {QuizTranslationCreateManyArgs} args - Arguments to create many QuizTranslations.
+     * @example
+     * // Create many QuizTranslations
+     * const quizTranslation = await prisma.quizTranslation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends QuizTranslationCreateManyArgs>(args?: SelectSubset<T, QuizTranslationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a QuizTranslation.
+     * @param {QuizTranslationDeleteArgs} args - Arguments to delete one QuizTranslation.
+     * @example
+     * // Delete one QuizTranslation
+     * const QuizTranslation = await prisma.quizTranslation.delete({
+     *   where: {
+     *     // ... filter to delete one QuizTranslation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends QuizTranslationDeleteArgs>(args: SelectSubset<T, QuizTranslationDeleteArgs<ExtArgs>>): Prisma__QuizTranslationClient<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one QuizTranslation.
+     * @param {QuizTranslationUpdateArgs} args - Arguments to update one QuizTranslation.
+     * @example
+     * // Update one QuizTranslation
+     * const quizTranslation = await prisma.quizTranslation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends QuizTranslationUpdateArgs>(args: SelectSubset<T, QuizTranslationUpdateArgs<ExtArgs>>): Prisma__QuizTranslationClient<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more QuizTranslations.
+     * @param {QuizTranslationDeleteManyArgs} args - Arguments to filter QuizTranslations to delete.
+     * @example
+     * // Delete a few QuizTranslations
+     * const { count } = await prisma.quizTranslation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends QuizTranslationDeleteManyArgs>(args?: SelectSubset<T, QuizTranslationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more QuizTranslations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizTranslationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many QuizTranslations
+     * const quizTranslation = await prisma.quizTranslation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends QuizTranslationUpdateManyArgs>(args: SelectSubset<T, QuizTranslationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one QuizTranslation.
+     * @param {QuizTranslationUpsertArgs} args - Arguments to update or create a QuizTranslation.
+     * @example
+     * // Update or create a QuizTranslation
+     * const quizTranslation = await prisma.quizTranslation.upsert({
+     *   create: {
+     *     // ... data to create a QuizTranslation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the QuizTranslation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends QuizTranslationUpsertArgs>(args: SelectSubset<T, QuizTranslationUpsertArgs<ExtArgs>>): Prisma__QuizTranslationClient<$Result.GetResult<Prisma.$QuizTranslationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of QuizTranslations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizTranslationCountArgs} args - Arguments to filter QuizTranslations to count.
+     * @example
+     * // Count the number of QuizTranslations
+     * const count = await prisma.quizTranslation.count({
+     *   where: {
+     *     // ... the filter for the QuizTranslations we want to count
+     *   }
+     * })
+    **/
+    count<T extends QuizTranslationCountArgs>(
+      args?: Subset<T, QuizTranslationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], QuizTranslationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a QuizTranslation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizTranslationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends QuizTranslationAggregateArgs>(args: Subset<T, QuizTranslationAggregateArgs>): Prisma.PrismaPromise<GetQuizTranslationAggregateType<T>>
+
+    /**
+     * Group by QuizTranslation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuizTranslationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends QuizTranslationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: QuizTranslationGroupByArgs['orderBy'] }
+        : { orderBy?: QuizTranslationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, QuizTranslationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuizTranslationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the QuizTranslation model
+   */
+  readonly fields: QuizTranslationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for QuizTranslation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__QuizTranslationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    quiz<T extends QuizDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuizDefaultArgs<ExtArgs>>): Prisma__QuizClient<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the QuizTranslation model
+   */
+  interface QuizTranslationFieldRefs {
+    readonly id: FieldRef<"QuizTranslation", 'Int'>
+    readonly quizId: FieldRef<"QuizTranslation", 'Int'>
+    readonly language: FieldRef<"QuizTranslation", 'Language'>
+    readonly title: FieldRef<"QuizTranslation", 'String'>
+    readonly description: FieldRef<"QuizTranslation", 'String'>
+    readonly createdAt: FieldRef<"QuizTranslation", 'DateTime'>
+    readonly updatedAt: FieldRef<"QuizTranslation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * QuizTranslation findUnique
+   */
+  export type QuizTranslationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuizTranslation to fetch.
+     */
+    where: QuizTranslationWhereUniqueInput
+  }
+
+  /**
+   * QuizTranslation findUniqueOrThrow
+   */
+  export type QuizTranslationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuizTranslation to fetch.
+     */
+    where: QuizTranslationWhereUniqueInput
+  }
+
+  /**
+   * QuizTranslation findFirst
+   */
+  export type QuizTranslationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuizTranslation to fetch.
+     */
+    where?: QuizTranslationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuizTranslations to fetch.
+     */
+    orderBy?: QuizTranslationOrderByWithRelationInput | QuizTranslationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuizTranslations.
+     */
+    cursor?: QuizTranslationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuizTranslations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuizTranslations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuizTranslations.
+     */
+    distinct?: QuizTranslationScalarFieldEnum | QuizTranslationScalarFieldEnum[]
+  }
+
+  /**
+   * QuizTranslation findFirstOrThrow
+   */
+  export type QuizTranslationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuizTranslation to fetch.
+     */
+    where?: QuizTranslationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuizTranslations to fetch.
+     */
+    orderBy?: QuizTranslationOrderByWithRelationInput | QuizTranslationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuizTranslations.
+     */
+    cursor?: QuizTranslationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuizTranslations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuizTranslations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuizTranslations.
+     */
+    distinct?: QuizTranslationScalarFieldEnum | QuizTranslationScalarFieldEnum[]
+  }
+
+  /**
+   * QuizTranslation findMany
+   */
+  export type QuizTranslationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuizTranslations to fetch.
+     */
+    where?: QuizTranslationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuizTranslations to fetch.
+     */
+    orderBy?: QuizTranslationOrderByWithRelationInput | QuizTranslationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing QuizTranslations.
+     */
+    cursor?: QuizTranslationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuizTranslations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuizTranslations.
+     */
+    skip?: number
+    distinct?: QuizTranslationScalarFieldEnum | QuizTranslationScalarFieldEnum[]
+  }
+
+  /**
+   * QuizTranslation create
+   */
+  export type QuizTranslationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a QuizTranslation.
+     */
+    data: XOR<QuizTranslationCreateInput, QuizTranslationUncheckedCreateInput>
+  }
+
+  /**
+   * QuizTranslation createMany
+   */
+  export type QuizTranslationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many QuizTranslations.
+     */
+    data: QuizTranslationCreateManyInput | QuizTranslationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * QuizTranslation update
+   */
+  export type QuizTranslationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a QuizTranslation.
+     */
+    data: XOR<QuizTranslationUpdateInput, QuizTranslationUncheckedUpdateInput>
+    /**
+     * Choose, which QuizTranslation to update.
+     */
+    where: QuizTranslationWhereUniqueInput
+  }
+
+  /**
+   * QuizTranslation updateMany
+   */
+  export type QuizTranslationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update QuizTranslations.
+     */
+    data: XOR<QuizTranslationUpdateManyMutationInput, QuizTranslationUncheckedUpdateManyInput>
+    /**
+     * Filter which QuizTranslations to update
+     */
+    where?: QuizTranslationWhereInput
+    /**
+     * Limit how many QuizTranslations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * QuizTranslation upsert
+   */
+  export type QuizTranslationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the QuizTranslation to update in case it exists.
+     */
+    where: QuizTranslationWhereUniqueInput
+    /**
+     * In case the QuizTranslation found by the `where` argument doesn't exist, create a new QuizTranslation with this data.
+     */
+    create: XOR<QuizTranslationCreateInput, QuizTranslationUncheckedCreateInput>
+    /**
+     * In case the QuizTranslation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<QuizTranslationUpdateInput, QuizTranslationUncheckedUpdateInput>
+  }
+
+  /**
+   * QuizTranslation delete
+   */
+  export type QuizTranslationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+    /**
+     * Filter which QuizTranslation to delete.
+     */
+    where: QuizTranslationWhereUniqueInput
+  }
+
+  /**
+   * QuizTranslation deleteMany
+   */
+  export type QuizTranslationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which QuizTranslations to delete
+     */
+    where?: QuizTranslationWhereInput
+    /**
+     * Limit how many QuizTranslations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * QuizTranslation without action
+   */
+  export type QuizTranslationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuizTranslation
+     */
+    select?: QuizTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuizTranslation
+     */
+    omit?: QuizTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuizTranslationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model Question
    */
 
@@ -4727,26 +5954,19 @@ export namespace Prisma {
   export type QuestionMinAggregateOutputType = {
     id: number | null
     quizId: number | null
-    questionText: string | null
     correctAnswerIndex: number | null
-    explanation: string | null
   }
 
   export type QuestionMaxAggregateOutputType = {
     id: number | null
     quizId: number | null
-    questionText: string | null
     correctAnswerIndex: number | null
-    explanation: string | null
   }
 
   export type QuestionCountAggregateOutputType = {
     id: number
     quizId: number
-    questionText: number
-    options: number
     correctAnswerIndex: number
-    explanation: number
     _all: number
   }
 
@@ -4766,26 +5986,19 @@ export namespace Prisma {
   export type QuestionMinAggregateInputType = {
     id?: true
     quizId?: true
-    questionText?: true
     correctAnswerIndex?: true
-    explanation?: true
   }
 
   export type QuestionMaxAggregateInputType = {
     id?: true
     quizId?: true
-    questionText?: true
     correctAnswerIndex?: true
-    explanation?: true
   }
 
   export type QuestionCountAggregateInputType = {
     id?: true
     quizId?: true
-    questionText?: true
-    options?: true
     correctAnswerIndex?: true
-    explanation?: true
     _all?: true
   }
 
@@ -4878,10 +6091,7 @@ export namespace Prisma {
   export type QuestionGroupByOutputType = {
     id: number
     quizId: number
-    questionText: string
-    options: JsonValue
     correctAnswerIndex: number
-    explanation: string | null
     _count: QuestionCountAggregateOutputType | null
     _avg: QuestionAvgAggregateOutputType | null
     _sum: QuestionSumAggregateOutputType | null
@@ -4906,11 +6116,10 @@ export namespace Prisma {
   export type QuestionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     quizId?: boolean
-    questionText?: boolean
-    options?: boolean
     correctAnswerIndex?: boolean
-    explanation?: boolean
     quiz?: boolean | QuizDefaultArgs<ExtArgs>
+    translations?: boolean | Question$translationsArgs<ExtArgs>
+    _count?: boolean | QuestionCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["question"]>
 
 
@@ -4918,29 +6127,26 @@ export namespace Prisma {
   export type QuestionSelectScalar = {
     id?: boolean
     quizId?: boolean
-    questionText?: boolean
-    options?: boolean
     correctAnswerIndex?: boolean
-    explanation?: boolean
   }
 
-  export type QuestionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quizId" | "questionText" | "options" | "correctAnswerIndex" | "explanation", ExtArgs["result"]["question"]>
+  export type QuestionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "quizId" | "correctAnswerIndex", ExtArgs["result"]["question"]>
   export type QuestionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     quiz?: boolean | QuizDefaultArgs<ExtArgs>
+    translations?: boolean | Question$translationsArgs<ExtArgs>
+    _count?: boolean | QuestionCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $QuestionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Question"
     objects: {
       quiz: Prisma.$QuizPayload<ExtArgs>
+      translations: Prisma.$QuestionTranslationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
       quizId: number
-      questionText: string
-      options: Prisma.JsonValue
       correctAnswerIndex: number
-      explanation: string | null
     }, ExtArgs["result"]["question"]>
     composites: {}
   }
@@ -5282,6 +6488,7 @@ export namespace Prisma {
   export interface Prisma__QuestionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     quiz<T extends QuizDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuizDefaultArgs<ExtArgs>>): Prisma__QuizClient<$Result.GetResult<Prisma.$QuizPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    translations<T extends Question$translationsArgs<ExtArgs> = {}>(args?: Subset<T, Question$translationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5313,10 +6520,7 @@ export namespace Prisma {
   interface QuestionFieldRefs {
     readonly id: FieldRef<"Question", 'Int'>
     readonly quizId: FieldRef<"Question", 'Int'>
-    readonly questionText: FieldRef<"Question", 'String'>
-    readonly options: FieldRef<"Question", 'Json'>
     readonly correctAnswerIndex: FieldRef<"Question", 'Int'>
-    readonly explanation: FieldRef<"Question", 'String'>
   }
     
 
@@ -5660,6 +6864,30 @@ export namespace Prisma {
   }
 
   /**
+   * Question.translations
+   */
+  export type Question$translationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    where?: QuestionTranslationWhereInput
+    orderBy?: QuestionTranslationOrderByWithRelationInput | QuestionTranslationOrderByWithRelationInput[]
+    cursor?: QuestionTranslationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuestionTranslationScalarFieldEnum | QuestionTranslationScalarFieldEnum[]
+  }
+
+  /**
    * Question without action
    */
   export type QuestionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5675,6 +6903,1002 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: QuestionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model QuestionTranslation
+   */
+
+  export type AggregateQuestionTranslation = {
+    _count: QuestionTranslationCountAggregateOutputType | null
+    _avg: QuestionTranslationAvgAggregateOutputType | null
+    _sum: QuestionTranslationSumAggregateOutputType | null
+    _min: QuestionTranslationMinAggregateOutputType | null
+    _max: QuestionTranslationMaxAggregateOutputType | null
+  }
+
+  export type QuestionTranslationAvgAggregateOutputType = {
+    id: number | null
+    questionId: number | null
+  }
+
+  export type QuestionTranslationSumAggregateOutputType = {
+    id: number | null
+    questionId: number | null
+  }
+
+  export type QuestionTranslationMinAggregateOutputType = {
+    id: number | null
+    questionId: number | null
+    language: $Enums.Language | null
+    questionText: string | null
+    explanation: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type QuestionTranslationMaxAggregateOutputType = {
+    id: number | null
+    questionId: number | null
+    language: $Enums.Language | null
+    questionText: string | null
+    explanation: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type QuestionTranslationCountAggregateOutputType = {
+    id: number
+    questionId: number
+    language: number
+    questionText: number
+    options: number
+    explanation: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type QuestionTranslationAvgAggregateInputType = {
+    id?: true
+    questionId?: true
+  }
+
+  export type QuestionTranslationSumAggregateInputType = {
+    id?: true
+    questionId?: true
+  }
+
+  export type QuestionTranslationMinAggregateInputType = {
+    id?: true
+    questionId?: true
+    language?: true
+    questionText?: true
+    explanation?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type QuestionTranslationMaxAggregateInputType = {
+    id?: true
+    questionId?: true
+    language?: true
+    questionText?: true
+    explanation?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type QuestionTranslationCountAggregateInputType = {
+    id?: true
+    questionId?: true
+    language?: true
+    questionText?: true
+    options?: true
+    explanation?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type QuestionTranslationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which QuestionTranslation to aggregate.
+     */
+    where?: QuestionTranslationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuestionTranslations to fetch.
+     */
+    orderBy?: QuestionTranslationOrderByWithRelationInput | QuestionTranslationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: QuestionTranslationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuestionTranslations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuestionTranslations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned QuestionTranslations
+    **/
+    _count?: true | QuestionTranslationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: QuestionTranslationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: QuestionTranslationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: QuestionTranslationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: QuestionTranslationMaxAggregateInputType
+  }
+
+  export type GetQuestionTranslationAggregateType<T extends QuestionTranslationAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuestionTranslation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateQuestionTranslation[P]>
+      : GetScalarType<T[P], AggregateQuestionTranslation[P]>
+  }
+
+
+
+
+  export type QuestionTranslationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuestionTranslationWhereInput
+    orderBy?: QuestionTranslationOrderByWithAggregationInput | QuestionTranslationOrderByWithAggregationInput[]
+    by: QuestionTranslationScalarFieldEnum[] | QuestionTranslationScalarFieldEnum
+    having?: QuestionTranslationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: QuestionTranslationCountAggregateInputType | true
+    _avg?: QuestionTranslationAvgAggregateInputType
+    _sum?: QuestionTranslationSumAggregateInputType
+    _min?: QuestionTranslationMinAggregateInputType
+    _max?: QuestionTranslationMaxAggregateInputType
+  }
+
+  export type QuestionTranslationGroupByOutputType = {
+    id: number
+    questionId: number
+    language: $Enums.Language
+    questionText: string
+    options: JsonValue
+    explanation: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: QuestionTranslationCountAggregateOutputType | null
+    _avg: QuestionTranslationAvgAggregateOutputType | null
+    _sum: QuestionTranslationSumAggregateOutputType | null
+    _min: QuestionTranslationMinAggregateOutputType | null
+    _max: QuestionTranslationMaxAggregateOutputType | null
+  }
+
+  type GetQuestionTranslationGroupByPayload<T extends QuestionTranslationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<QuestionTranslationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof QuestionTranslationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], QuestionTranslationGroupByOutputType[P]>
+            : GetScalarType<T[P], QuestionTranslationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type QuestionTranslationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    questionId?: boolean
+    language?: boolean
+    questionText?: boolean
+    options?: boolean
+    explanation?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    question?: boolean | QuestionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["questionTranslation"]>
+
+
+
+  export type QuestionTranslationSelectScalar = {
+    id?: boolean
+    questionId?: boolean
+    language?: boolean
+    questionText?: boolean
+    options?: boolean
+    explanation?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type QuestionTranslationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "questionId" | "language" | "questionText" | "options" | "explanation" | "createdAt" | "updatedAt", ExtArgs["result"]["questionTranslation"]>
+  export type QuestionTranslationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    question?: boolean | QuestionDefaultArgs<ExtArgs>
+  }
+
+  export type $QuestionTranslationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "QuestionTranslation"
+    objects: {
+      question: Prisma.$QuestionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      questionId: number
+      language: $Enums.Language
+      questionText: string
+      options: Prisma.JsonValue
+      explanation: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["questionTranslation"]>
+    composites: {}
+  }
+
+  type QuestionTranslationGetPayload<S extends boolean | null | undefined | QuestionTranslationDefaultArgs> = $Result.GetResult<Prisma.$QuestionTranslationPayload, S>
+
+  type QuestionTranslationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<QuestionTranslationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: QuestionTranslationCountAggregateInputType | true
+    }
+
+  export interface QuestionTranslationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['QuestionTranslation'], meta: { name: 'QuestionTranslation' } }
+    /**
+     * Find zero or one QuestionTranslation that matches the filter.
+     * @param {QuestionTranslationFindUniqueArgs} args - Arguments to find a QuestionTranslation
+     * @example
+     * // Get one QuestionTranslation
+     * const questionTranslation = await prisma.questionTranslation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends QuestionTranslationFindUniqueArgs>(args: SelectSubset<T, QuestionTranslationFindUniqueArgs<ExtArgs>>): Prisma__QuestionTranslationClient<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one QuestionTranslation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {QuestionTranslationFindUniqueOrThrowArgs} args - Arguments to find a QuestionTranslation
+     * @example
+     * // Get one QuestionTranslation
+     * const questionTranslation = await prisma.questionTranslation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends QuestionTranslationFindUniqueOrThrowArgs>(args: SelectSubset<T, QuestionTranslationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__QuestionTranslationClient<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first QuestionTranslation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionTranslationFindFirstArgs} args - Arguments to find a QuestionTranslation
+     * @example
+     * // Get one QuestionTranslation
+     * const questionTranslation = await prisma.questionTranslation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends QuestionTranslationFindFirstArgs>(args?: SelectSubset<T, QuestionTranslationFindFirstArgs<ExtArgs>>): Prisma__QuestionTranslationClient<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first QuestionTranslation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionTranslationFindFirstOrThrowArgs} args - Arguments to find a QuestionTranslation
+     * @example
+     * // Get one QuestionTranslation
+     * const questionTranslation = await prisma.questionTranslation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends QuestionTranslationFindFirstOrThrowArgs>(args?: SelectSubset<T, QuestionTranslationFindFirstOrThrowArgs<ExtArgs>>): Prisma__QuestionTranslationClient<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more QuestionTranslations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionTranslationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all QuestionTranslations
+     * const questionTranslations = await prisma.questionTranslation.findMany()
+     * 
+     * // Get first 10 QuestionTranslations
+     * const questionTranslations = await prisma.questionTranslation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const questionTranslationWithIdOnly = await prisma.questionTranslation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends QuestionTranslationFindManyArgs>(args?: SelectSubset<T, QuestionTranslationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a QuestionTranslation.
+     * @param {QuestionTranslationCreateArgs} args - Arguments to create a QuestionTranslation.
+     * @example
+     * // Create one QuestionTranslation
+     * const QuestionTranslation = await prisma.questionTranslation.create({
+     *   data: {
+     *     // ... data to create a QuestionTranslation
+     *   }
+     * })
+     * 
+     */
+    create<T extends QuestionTranslationCreateArgs>(args: SelectSubset<T, QuestionTranslationCreateArgs<ExtArgs>>): Prisma__QuestionTranslationClient<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many QuestionTranslations.
+     * @param {QuestionTranslationCreateManyArgs} args - Arguments to create many QuestionTranslations.
+     * @example
+     * // Create many QuestionTranslations
+     * const questionTranslation = await prisma.questionTranslation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends QuestionTranslationCreateManyArgs>(args?: SelectSubset<T, QuestionTranslationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a QuestionTranslation.
+     * @param {QuestionTranslationDeleteArgs} args - Arguments to delete one QuestionTranslation.
+     * @example
+     * // Delete one QuestionTranslation
+     * const QuestionTranslation = await prisma.questionTranslation.delete({
+     *   where: {
+     *     // ... filter to delete one QuestionTranslation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends QuestionTranslationDeleteArgs>(args: SelectSubset<T, QuestionTranslationDeleteArgs<ExtArgs>>): Prisma__QuestionTranslationClient<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one QuestionTranslation.
+     * @param {QuestionTranslationUpdateArgs} args - Arguments to update one QuestionTranslation.
+     * @example
+     * // Update one QuestionTranslation
+     * const questionTranslation = await prisma.questionTranslation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends QuestionTranslationUpdateArgs>(args: SelectSubset<T, QuestionTranslationUpdateArgs<ExtArgs>>): Prisma__QuestionTranslationClient<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more QuestionTranslations.
+     * @param {QuestionTranslationDeleteManyArgs} args - Arguments to filter QuestionTranslations to delete.
+     * @example
+     * // Delete a few QuestionTranslations
+     * const { count } = await prisma.questionTranslation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends QuestionTranslationDeleteManyArgs>(args?: SelectSubset<T, QuestionTranslationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more QuestionTranslations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionTranslationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many QuestionTranslations
+     * const questionTranslation = await prisma.questionTranslation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends QuestionTranslationUpdateManyArgs>(args: SelectSubset<T, QuestionTranslationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one QuestionTranslation.
+     * @param {QuestionTranslationUpsertArgs} args - Arguments to update or create a QuestionTranslation.
+     * @example
+     * // Update or create a QuestionTranslation
+     * const questionTranslation = await prisma.questionTranslation.upsert({
+     *   create: {
+     *     // ... data to create a QuestionTranslation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the QuestionTranslation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends QuestionTranslationUpsertArgs>(args: SelectSubset<T, QuestionTranslationUpsertArgs<ExtArgs>>): Prisma__QuestionTranslationClient<$Result.GetResult<Prisma.$QuestionTranslationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of QuestionTranslations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionTranslationCountArgs} args - Arguments to filter QuestionTranslations to count.
+     * @example
+     * // Count the number of QuestionTranslations
+     * const count = await prisma.questionTranslation.count({
+     *   where: {
+     *     // ... the filter for the QuestionTranslations we want to count
+     *   }
+     * })
+    **/
+    count<T extends QuestionTranslationCountArgs>(
+      args?: Subset<T, QuestionTranslationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], QuestionTranslationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a QuestionTranslation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionTranslationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends QuestionTranslationAggregateArgs>(args: Subset<T, QuestionTranslationAggregateArgs>): Prisma.PrismaPromise<GetQuestionTranslationAggregateType<T>>
+
+    /**
+     * Group by QuestionTranslation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuestionTranslationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends QuestionTranslationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: QuestionTranslationGroupByArgs['orderBy'] }
+        : { orderBy?: QuestionTranslationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, QuestionTranslationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuestionTranslationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the QuestionTranslation model
+   */
+  readonly fields: QuestionTranslationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for QuestionTranslation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__QuestionTranslationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    question<T extends QuestionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, QuestionDefaultArgs<ExtArgs>>): Prisma__QuestionClient<$Result.GetResult<Prisma.$QuestionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the QuestionTranslation model
+   */
+  interface QuestionTranslationFieldRefs {
+    readonly id: FieldRef<"QuestionTranslation", 'Int'>
+    readonly questionId: FieldRef<"QuestionTranslation", 'Int'>
+    readonly language: FieldRef<"QuestionTranslation", 'Language'>
+    readonly questionText: FieldRef<"QuestionTranslation", 'String'>
+    readonly options: FieldRef<"QuestionTranslation", 'Json'>
+    readonly explanation: FieldRef<"QuestionTranslation", 'String'>
+    readonly createdAt: FieldRef<"QuestionTranslation", 'DateTime'>
+    readonly updatedAt: FieldRef<"QuestionTranslation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * QuestionTranslation findUnique
+   */
+  export type QuestionTranslationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuestionTranslation to fetch.
+     */
+    where: QuestionTranslationWhereUniqueInput
+  }
+
+  /**
+   * QuestionTranslation findUniqueOrThrow
+   */
+  export type QuestionTranslationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuestionTranslation to fetch.
+     */
+    where: QuestionTranslationWhereUniqueInput
+  }
+
+  /**
+   * QuestionTranslation findFirst
+   */
+  export type QuestionTranslationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuestionTranslation to fetch.
+     */
+    where?: QuestionTranslationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuestionTranslations to fetch.
+     */
+    orderBy?: QuestionTranslationOrderByWithRelationInput | QuestionTranslationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuestionTranslations.
+     */
+    cursor?: QuestionTranslationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuestionTranslations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuestionTranslations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuestionTranslations.
+     */
+    distinct?: QuestionTranslationScalarFieldEnum | QuestionTranslationScalarFieldEnum[]
+  }
+
+  /**
+   * QuestionTranslation findFirstOrThrow
+   */
+  export type QuestionTranslationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuestionTranslation to fetch.
+     */
+    where?: QuestionTranslationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuestionTranslations to fetch.
+     */
+    orderBy?: QuestionTranslationOrderByWithRelationInput | QuestionTranslationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuestionTranslations.
+     */
+    cursor?: QuestionTranslationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuestionTranslations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuestionTranslations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuestionTranslations.
+     */
+    distinct?: QuestionTranslationScalarFieldEnum | QuestionTranslationScalarFieldEnum[]
+  }
+
+  /**
+   * QuestionTranslation findMany
+   */
+  export type QuestionTranslationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * Filter, which QuestionTranslations to fetch.
+     */
+    where?: QuestionTranslationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuestionTranslations to fetch.
+     */
+    orderBy?: QuestionTranslationOrderByWithRelationInput | QuestionTranslationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing QuestionTranslations.
+     */
+    cursor?: QuestionTranslationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuestionTranslations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuestionTranslations.
+     */
+    skip?: number
+    distinct?: QuestionTranslationScalarFieldEnum | QuestionTranslationScalarFieldEnum[]
+  }
+
+  /**
+   * QuestionTranslation create
+   */
+  export type QuestionTranslationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a QuestionTranslation.
+     */
+    data: XOR<QuestionTranslationCreateInput, QuestionTranslationUncheckedCreateInput>
+  }
+
+  /**
+   * QuestionTranslation createMany
+   */
+  export type QuestionTranslationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many QuestionTranslations.
+     */
+    data: QuestionTranslationCreateManyInput | QuestionTranslationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * QuestionTranslation update
+   */
+  export type QuestionTranslationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a QuestionTranslation.
+     */
+    data: XOR<QuestionTranslationUpdateInput, QuestionTranslationUncheckedUpdateInput>
+    /**
+     * Choose, which QuestionTranslation to update.
+     */
+    where: QuestionTranslationWhereUniqueInput
+  }
+
+  /**
+   * QuestionTranslation updateMany
+   */
+  export type QuestionTranslationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update QuestionTranslations.
+     */
+    data: XOR<QuestionTranslationUpdateManyMutationInput, QuestionTranslationUncheckedUpdateManyInput>
+    /**
+     * Filter which QuestionTranslations to update
+     */
+    where?: QuestionTranslationWhereInput
+    /**
+     * Limit how many QuestionTranslations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * QuestionTranslation upsert
+   */
+  export type QuestionTranslationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the QuestionTranslation to update in case it exists.
+     */
+    where: QuestionTranslationWhereUniqueInput
+    /**
+     * In case the QuestionTranslation found by the `where` argument doesn't exist, create a new QuestionTranslation with this data.
+     */
+    create: XOR<QuestionTranslationCreateInput, QuestionTranslationUncheckedCreateInput>
+    /**
+     * In case the QuestionTranslation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<QuestionTranslationUpdateInput, QuestionTranslationUncheckedUpdateInput>
+  }
+
+  /**
+   * QuestionTranslation delete
+   */
+  export type QuestionTranslationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
+    /**
+     * Filter which QuestionTranslation to delete.
+     */
+    where: QuestionTranslationWhereUniqueInput
+  }
+
+  /**
+   * QuestionTranslation deleteMany
+   */
+  export type QuestionTranslationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which QuestionTranslations to delete
+     */
+    where?: QuestionTranslationWhereInput
+    /**
+     * Limit how many QuestionTranslations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * QuestionTranslation without action
+   */
+  export type QuestionTranslationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuestionTranslation
+     */
+    select?: QuestionTranslationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuestionTranslation
+     */
+    omit?: QuestionTranslationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuestionTranslationInclude<ExtArgs> | null
   }
 
 
@@ -8745,7 +10969,6 @@ export namespace Prisma {
 
   export const QuizScalarFieldEnum: {
     id: 'id',
-    title: 'title',
     passingScore: 'passingScore',
     totalPoints: 'totalPoints',
     timeLimit: 'timeLimit',
@@ -8758,16 +10981,40 @@ export namespace Prisma {
   export type QuizScalarFieldEnum = (typeof QuizScalarFieldEnum)[keyof typeof QuizScalarFieldEnum]
 
 
+  export const QuizTranslationScalarFieldEnum: {
+    id: 'id',
+    quizId: 'quizId',
+    language: 'language',
+    title: 'title',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type QuizTranslationScalarFieldEnum = (typeof QuizTranslationScalarFieldEnum)[keyof typeof QuizTranslationScalarFieldEnum]
+
+
   export const QuestionScalarFieldEnum: {
     id: 'id',
     quizId: 'quizId',
-    questionText: 'questionText',
-    options: 'options',
-    correctAnswerIndex: 'correctAnswerIndex',
-    explanation: 'explanation'
+    correctAnswerIndex: 'correctAnswerIndex'
   };
 
   export type QuestionScalarFieldEnum = (typeof QuestionScalarFieldEnum)[keyof typeof QuestionScalarFieldEnum]
+
+
+  export const QuestionTranslationScalarFieldEnum: {
+    id: 'id',
+    questionId: 'questionId',
+    language: 'language',
+    questionText: 'questionText',
+    options: 'options',
+    explanation: 'explanation',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type QuestionTranslationScalarFieldEnum = (typeof QuestionTranslationScalarFieldEnum)[keyof typeof QuestionTranslationScalarFieldEnum]
 
 
   export const CourseScalarFieldEnum: {
@@ -8856,11 +11103,12 @@ export namespace Prisma {
   export type TestCategoryOrderByRelevanceFieldEnum = (typeof TestCategoryOrderByRelevanceFieldEnum)[keyof typeof TestCategoryOrderByRelevanceFieldEnum]
 
 
-  export const QuizOrderByRelevanceFieldEnum: {
-    title: 'title'
+  export const QuizTranslationOrderByRelevanceFieldEnum: {
+    title: 'title',
+    description: 'description'
   };
 
-  export type QuizOrderByRelevanceFieldEnum = (typeof QuizOrderByRelevanceFieldEnum)[keyof typeof QuizOrderByRelevanceFieldEnum]
+  export type QuizTranslationOrderByRelevanceFieldEnum = (typeof QuizTranslationOrderByRelevanceFieldEnum)[keyof typeof QuizTranslationOrderByRelevanceFieldEnum]
 
 
   export const JsonNullValueFilter: {
@@ -8880,12 +11128,12 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
-  export const QuestionOrderByRelevanceFieldEnum: {
+  export const QuestionTranslationOrderByRelevanceFieldEnum: {
     questionText: 'questionText',
     explanation: 'explanation'
   };
 
-  export type QuestionOrderByRelevanceFieldEnum = (typeof QuestionOrderByRelevanceFieldEnum)[keyof typeof QuestionOrderByRelevanceFieldEnum]
+  export type QuestionTranslationOrderByRelevanceFieldEnum = (typeof QuestionTranslationOrderByRelevanceFieldEnum)[keyof typeof QuestionTranslationOrderByRelevanceFieldEnum]
 
 
   export const CourseOrderByRelevanceFieldEnum: {
@@ -8947,6 +11195,13 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime'
    */
   export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+  /**
+   * Reference to a field of type 'Language'
+   */
+  export type EnumLanguageFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Language'>
     
 
 
@@ -9124,7 +11379,6 @@ export namespace Prisma {
     OR?: QuizWhereInput[]
     NOT?: QuizWhereInput | QuizWhereInput[]
     id?: IntFilter<"Quiz"> | number
-    title?: StringFilter<"Quiz"> | string
     passingScore?: IntFilter<"Quiz"> | number
     totalPoints?: IntFilter<"Quiz"> | number
     timeLimit?: IntNullableFilter<"Quiz"> | number | null
@@ -9135,12 +11389,12 @@ export namespace Prisma {
     category?: XOR<TestCategoryScalarRelationFilter, TestCategoryWhereInput>
     creator?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     questions?: QuestionListRelationFilter
+    translations?: QuizTranslationListRelationFilter
     certificates?: CertificateListRelationFilter
   }
 
   export type QuizOrderByWithRelationInput = {
     id?: SortOrder
-    title?: SortOrder
     passingScore?: SortOrder
     totalPoints?: SortOrder
     timeLimit?: SortOrderInput | SortOrder
@@ -9151,8 +11405,8 @@ export namespace Prisma {
     category?: TestCategoryOrderByWithRelationInput
     creator?: UserOrderByWithRelationInput
     questions?: QuestionOrderByRelationAggregateInput
+    translations?: QuizTranslationOrderByRelationAggregateInput
     certificates?: CertificateOrderByRelationAggregateInput
-    _relevance?: QuizOrderByRelevanceInput
   }
 
   export type QuizWhereUniqueInput = Prisma.AtLeast<{
@@ -9160,7 +11414,6 @@ export namespace Prisma {
     AND?: QuizWhereInput | QuizWhereInput[]
     OR?: QuizWhereInput[]
     NOT?: QuizWhereInput | QuizWhereInput[]
-    title?: StringFilter<"Quiz"> | string
     passingScore?: IntFilter<"Quiz"> | number
     totalPoints?: IntFilter<"Quiz"> | number
     timeLimit?: IntNullableFilter<"Quiz"> | number | null
@@ -9171,12 +11424,12 @@ export namespace Prisma {
     category?: XOR<TestCategoryScalarRelationFilter, TestCategoryWhereInput>
     creator?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     questions?: QuestionListRelationFilter
+    translations?: QuizTranslationListRelationFilter
     certificates?: CertificateListRelationFilter
   }, "id">
 
   export type QuizOrderByWithAggregationInput = {
     id?: SortOrder
-    title?: SortOrder
     passingScore?: SortOrder
     totalPoints?: SortOrder
     timeLimit?: SortOrderInput | SortOrder
@@ -9196,7 +11449,6 @@ export namespace Prisma {
     OR?: QuizScalarWhereWithAggregatesInput[]
     NOT?: QuizScalarWhereWithAggregatesInput | QuizScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Quiz"> | number
-    title?: StringWithAggregatesFilter<"Quiz"> | string
     passingScore?: IntWithAggregatesFilter<"Quiz"> | number
     totalPoints?: IntWithAggregatesFilter<"Quiz"> | number
     timeLimit?: IntNullableWithAggregatesFilter<"Quiz"> | number | null
@@ -9206,28 +11458,92 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Quiz"> | Date | string
   }
 
+  export type QuizTranslationWhereInput = {
+    AND?: QuizTranslationWhereInput | QuizTranslationWhereInput[]
+    OR?: QuizTranslationWhereInput[]
+    NOT?: QuizTranslationWhereInput | QuizTranslationWhereInput[]
+    id?: IntFilter<"QuizTranslation"> | number
+    quizId?: IntFilter<"QuizTranslation"> | number
+    language?: EnumLanguageFilter<"QuizTranslation"> | $Enums.Language
+    title?: StringFilter<"QuizTranslation"> | string
+    description?: StringNullableFilter<"QuizTranslation"> | string | null
+    createdAt?: DateTimeFilter<"QuizTranslation"> | Date | string
+    updatedAt?: DateTimeFilter<"QuizTranslation"> | Date | string
+    quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
+  }
+
+  export type QuizTranslationOrderByWithRelationInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    language?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    quiz?: QuizOrderByWithRelationInput
+    _relevance?: QuizTranslationOrderByRelevanceInput
+  }
+
+  export type QuizTranslationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    quizId_language?: QuizTranslationQuizIdLanguageCompoundUniqueInput
+    AND?: QuizTranslationWhereInput | QuizTranslationWhereInput[]
+    OR?: QuizTranslationWhereInput[]
+    NOT?: QuizTranslationWhereInput | QuizTranslationWhereInput[]
+    quizId?: IntFilter<"QuizTranslation"> | number
+    language?: EnumLanguageFilter<"QuizTranslation"> | $Enums.Language
+    title?: StringFilter<"QuizTranslation"> | string
+    description?: StringNullableFilter<"QuizTranslation"> | string | null
+    createdAt?: DateTimeFilter<"QuizTranslation"> | Date | string
+    updatedAt?: DateTimeFilter<"QuizTranslation"> | Date | string
+    quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
+  }, "id" | "quizId_language">
+
+  export type QuizTranslationOrderByWithAggregationInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    language?: SortOrder
+    title?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: QuizTranslationCountOrderByAggregateInput
+    _avg?: QuizTranslationAvgOrderByAggregateInput
+    _max?: QuizTranslationMaxOrderByAggregateInput
+    _min?: QuizTranslationMinOrderByAggregateInput
+    _sum?: QuizTranslationSumOrderByAggregateInput
+  }
+
+  export type QuizTranslationScalarWhereWithAggregatesInput = {
+    AND?: QuizTranslationScalarWhereWithAggregatesInput | QuizTranslationScalarWhereWithAggregatesInput[]
+    OR?: QuizTranslationScalarWhereWithAggregatesInput[]
+    NOT?: QuizTranslationScalarWhereWithAggregatesInput | QuizTranslationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"QuizTranslation"> | number
+    quizId?: IntWithAggregatesFilter<"QuizTranslation"> | number
+    language?: EnumLanguageWithAggregatesFilter<"QuizTranslation"> | $Enums.Language
+    title?: StringWithAggregatesFilter<"QuizTranslation"> | string
+    description?: StringNullableWithAggregatesFilter<"QuizTranslation"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"QuizTranslation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"QuizTranslation"> | Date | string
+  }
+
   export type QuestionWhereInput = {
     AND?: QuestionWhereInput | QuestionWhereInput[]
     OR?: QuestionWhereInput[]
     NOT?: QuestionWhereInput | QuestionWhereInput[]
     id?: IntFilter<"Question"> | number
     quizId?: IntFilter<"Question"> | number
-    questionText?: StringFilter<"Question"> | string
-    options?: JsonFilter<"Question">
     correctAnswerIndex?: IntFilter<"Question"> | number
-    explanation?: StringNullableFilter<"Question"> | string | null
     quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
+    translations?: QuestionTranslationListRelationFilter
   }
 
   export type QuestionOrderByWithRelationInput = {
     id?: SortOrder
     quizId?: SortOrder
-    questionText?: SortOrder
-    options?: SortOrder
     correctAnswerIndex?: SortOrder
-    explanation?: SortOrderInput | SortOrder
     quiz?: QuizOrderByWithRelationInput
-    _relevance?: QuestionOrderByRelevanceInput
+    translations?: QuestionTranslationOrderByRelationAggregateInput
   }
 
   export type QuestionWhereUniqueInput = Prisma.AtLeast<{
@@ -9236,20 +11552,15 @@ export namespace Prisma {
     OR?: QuestionWhereInput[]
     NOT?: QuestionWhereInput | QuestionWhereInput[]
     quizId?: IntFilter<"Question"> | number
-    questionText?: StringFilter<"Question"> | string
-    options?: JsonFilter<"Question">
     correctAnswerIndex?: IntFilter<"Question"> | number
-    explanation?: StringNullableFilter<"Question"> | string | null
     quiz?: XOR<QuizScalarRelationFilter, QuizWhereInput>
+    translations?: QuestionTranslationListRelationFilter
   }, "id">
 
   export type QuestionOrderByWithAggregationInput = {
     id?: SortOrder
     quizId?: SortOrder
-    questionText?: SortOrder
-    options?: SortOrder
     correctAnswerIndex?: SortOrder
-    explanation?: SortOrderInput | SortOrder
     _count?: QuestionCountOrderByAggregateInput
     _avg?: QuestionAvgOrderByAggregateInput
     _max?: QuestionMaxOrderByAggregateInput
@@ -9263,10 +11574,81 @@ export namespace Prisma {
     NOT?: QuestionScalarWhereWithAggregatesInput | QuestionScalarWhereWithAggregatesInput[]
     id?: IntWithAggregatesFilter<"Question"> | number
     quizId?: IntWithAggregatesFilter<"Question"> | number
-    questionText?: StringWithAggregatesFilter<"Question"> | string
-    options?: JsonWithAggregatesFilter<"Question">
     correctAnswerIndex?: IntWithAggregatesFilter<"Question"> | number
-    explanation?: StringNullableWithAggregatesFilter<"Question"> | string | null
+  }
+
+  export type QuestionTranslationWhereInput = {
+    AND?: QuestionTranslationWhereInput | QuestionTranslationWhereInput[]
+    OR?: QuestionTranslationWhereInput[]
+    NOT?: QuestionTranslationWhereInput | QuestionTranslationWhereInput[]
+    id?: IntFilter<"QuestionTranslation"> | number
+    questionId?: IntFilter<"QuestionTranslation"> | number
+    language?: EnumLanguageFilter<"QuestionTranslation"> | $Enums.Language
+    questionText?: StringFilter<"QuestionTranslation"> | string
+    options?: JsonFilter<"QuestionTranslation">
+    explanation?: StringNullableFilter<"QuestionTranslation"> | string | null
+    createdAt?: DateTimeFilter<"QuestionTranslation"> | Date | string
+    updatedAt?: DateTimeFilter<"QuestionTranslation"> | Date | string
+    question?: XOR<QuestionScalarRelationFilter, QuestionWhereInput>
+  }
+
+  export type QuestionTranslationOrderByWithRelationInput = {
+    id?: SortOrder
+    questionId?: SortOrder
+    language?: SortOrder
+    questionText?: SortOrder
+    options?: SortOrder
+    explanation?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    question?: QuestionOrderByWithRelationInput
+    _relevance?: QuestionTranslationOrderByRelevanceInput
+  }
+
+  export type QuestionTranslationWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    questionId_language?: QuestionTranslationQuestionIdLanguageCompoundUniqueInput
+    AND?: QuestionTranslationWhereInput | QuestionTranslationWhereInput[]
+    OR?: QuestionTranslationWhereInput[]
+    NOT?: QuestionTranslationWhereInput | QuestionTranslationWhereInput[]
+    questionId?: IntFilter<"QuestionTranslation"> | number
+    language?: EnumLanguageFilter<"QuestionTranslation"> | $Enums.Language
+    questionText?: StringFilter<"QuestionTranslation"> | string
+    options?: JsonFilter<"QuestionTranslation">
+    explanation?: StringNullableFilter<"QuestionTranslation"> | string | null
+    createdAt?: DateTimeFilter<"QuestionTranslation"> | Date | string
+    updatedAt?: DateTimeFilter<"QuestionTranslation"> | Date | string
+    question?: XOR<QuestionScalarRelationFilter, QuestionWhereInput>
+  }, "id" | "questionId_language">
+
+  export type QuestionTranslationOrderByWithAggregationInput = {
+    id?: SortOrder
+    questionId?: SortOrder
+    language?: SortOrder
+    questionText?: SortOrder
+    options?: SortOrder
+    explanation?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: QuestionTranslationCountOrderByAggregateInput
+    _avg?: QuestionTranslationAvgOrderByAggregateInput
+    _max?: QuestionTranslationMaxOrderByAggregateInput
+    _min?: QuestionTranslationMinOrderByAggregateInput
+    _sum?: QuestionTranslationSumOrderByAggregateInput
+  }
+
+  export type QuestionTranslationScalarWhereWithAggregatesInput = {
+    AND?: QuestionTranslationScalarWhereWithAggregatesInput | QuestionTranslationScalarWhereWithAggregatesInput[]
+    OR?: QuestionTranslationScalarWhereWithAggregatesInput[]
+    NOT?: QuestionTranslationScalarWhereWithAggregatesInput | QuestionTranslationScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"QuestionTranslation"> | number
+    questionId?: IntWithAggregatesFilter<"QuestionTranslation"> | number
+    language?: EnumLanguageWithAggregatesFilter<"QuestionTranslation"> | $Enums.Language
+    questionText?: StringWithAggregatesFilter<"QuestionTranslation"> | string
+    options?: JsonWithAggregatesFilter<"QuestionTranslation">
+    explanation?: StringNullableWithAggregatesFilter<"QuestionTranslation"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"QuestionTranslation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"QuestionTranslation"> | Date | string
   }
 
   export type CourseWhereInput = {
@@ -9656,7 +12038,6 @@ export namespace Prisma {
   }
 
   export type QuizCreateInput = {
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -9665,12 +12046,12 @@ export namespace Prisma {
     category: TestCategoryCreateNestedOneWithoutQuizzesInput
     creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
     questions?: QuestionCreateNestedManyWithoutQuizInput
+    translations?: QuizTranslationCreateNestedManyWithoutQuizInput
     certificates?: CertificateCreateNestedManyWithoutQuizInput
   }
 
   export type QuizUncheckedCreateInput = {
     id?: number
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -9679,11 +12060,11 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
+    translations?: QuizTranslationUncheckedCreateNestedManyWithoutQuizInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
   }
 
   export type QuizUpdateInput = {
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -9692,12 +12073,12 @@ export namespace Prisma {
     category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
     creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
     questions?: QuestionUpdateManyWithoutQuizNestedInput
+    translations?: QuizTranslationUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -9706,12 +12087,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
+    translations?: QuizTranslationUncheckedUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizCreateManyInput = {
     id?: number
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -9722,7 +12103,6 @@ export namespace Prisma {
   }
 
   export type QuizUpdateManyMutationInput = {
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -9732,7 +12112,6 @@ export namespace Prisma {
 
   export type QuizUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -9742,63 +12121,185 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type QuizTranslationCreateInput = {
+    language: $Enums.Language
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quiz: QuizCreateNestedOneWithoutTranslationsInput
+  }
+
+  export type QuizTranslationUncheckedCreateInput = {
+    id?: number
+    quizId: number
+    language: $Enums.Language
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizTranslationUpdateInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quiz?: QuizUpdateOneRequiredWithoutTranslationsNestedInput
+  }
+
+  export type QuizTranslationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizTranslationCreateManyInput = {
+    id?: number
+    quizId: number
+    language: $Enums.Language
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizTranslationUpdateManyMutationInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizTranslationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type QuestionCreateInput = {
-    questionText: string
-    options: JsonNullValueInput | InputJsonValue
     correctAnswerIndex: number
-    explanation?: string | null
     quiz: QuizCreateNestedOneWithoutQuestionsInput
+    translations?: QuestionTranslationCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionUncheckedCreateInput = {
     id?: number
     quizId: number
-    questionText: string
-    options: JsonNullValueInput | InputJsonValue
     correctAnswerIndex: number
-    explanation?: string | null
+    translations?: QuestionTranslationUncheckedCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionUpdateInput = {
-    questionText?: StringFieldUpdateOperationsInput | string
-    options?: JsonNullValueInput | InputJsonValue
     correctAnswerIndex?: IntFieldUpdateOperationsInput | number
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
     quiz?: QuizUpdateOneRequiredWithoutQuestionsNestedInput
+    translations?: QuestionTranslationUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateInput = {
     id?: IntFieldUpdateOperationsInput | number
     quizId?: IntFieldUpdateOperationsInput | number
-    questionText?: StringFieldUpdateOperationsInput | string
-    options?: JsonNullValueInput | InputJsonValue
     correctAnswerIndex?: IntFieldUpdateOperationsInput | number
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    translations?: QuestionTranslationUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionCreateManyInput = {
     id?: number
     quizId: number
-    questionText: string
-    options: JsonNullValueInput | InputJsonValue
     correctAnswerIndex: number
-    explanation?: string | null
   }
 
   export type QuestionUpdateManyMutationInput = {
-    questionText?: StringFieldUpdateOperationsInput | string
-    options?: JsonNullValueInput | InputJsonValue
     correctAnswerIndex?: IntFieldUpdateOperationsInput | number
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QuestionUncheckedUpdateManyInput = {
     id?: IntFieldUpdateOperationsInput | number
     quizId?: IntFieldUpdateOperationsInput | number
+    correctAnswerIndex?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type QuestionTranslationCreateInput = {
+    language: $Enums.Language
+    questionText: string
+    options: JsonNullValueInput | InputJsonValue
+    explanation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    question: QuestionCreateNestedOneWithoutTranslationsInput
+  }
+
+  export type QuestionTranslationUncheckedCreateInput = {
+    id?: number
+    questionId: number
+    language: $Enums.Language
+    questionText: string
+    options: JsonNullValueInput | InputJsonValue
+    explanation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuestionTranslationUpdateInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
     questionText?: StringFieldUpdateOperationsInput | string
     options?: JsonNullValueInput | InputJsonValue
-    correctAnswerIndex?: IntFieldUpdateOperationsInput | number
     explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    question?: QuestionUpdateOneRequiredWithoutTranslationsNestedInput
+  }
+
+  export type QuestionTranslationUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    questionText?: StringFieldUpdateOperationsInput | string
+    options?: JsonNullValueInput | InputJsonValue
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionTranslationCreateManyInput = {
+    id?: number
+    questionId: number
+    language: $Enums.Language
+    questionText: string
+    options: JsonNullValueInput | InputJsonValue
+    explanation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuestionTranslationUpdateManyMutationInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    questionText?: StringFieldUpdateOperationsInput | string
+    options?: JsonNullValueInput | InputJsonValue
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionTranslationUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    questionId?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    questionText?: StringFieldUpdateOperationsInput | string
+    options?: JsonNullValueInput | InputJsonValue
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CourseCreateInput = {
@@ -10343,19 +12844,22 @@ export namespace Prisma {
     none?: QuestionWhereInput
   }
 
+  export type QuizTranslationListRelationFilter = {
+    every?: QuizTranslationWhereInput
+    some?: QuizTranslationWhereInput
+    none?: QuizTranslationWhereInput
+  }
+
   export type QuestionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type QuizOrderByRelevanceInput = {
-    fields: QuizOrderByRelevanceFieldEnum | QuizOrderByRelevanceFieldEnum[]
-    sort: SortOrder
-    search: string
+  export type QuizTranslationOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type QuizCountOrderByAggregateInput = {
     id?: SortOrder
-    title?: SortOrder
     passingScore?: SortOrder
     totalPoints?: SortOrder
     timeLimit?: SortOrder
@@ -10376,7 +12880,6 @@ export namespace Prisma {
 
   export type QuizMaxOrderByAggregateInput = {
     id?: SortOrder
-    title?: SortOrder
     passingScore?: SortOrder
     totalPoints?: SortOrder
     timeLimit?: SortOrder
@@ -10388,7 +12891,6 @@ export namespace Prisma {
 
   export type QuizMinOrderByAggregateInput = {
     id?: SortOrder
-    title?: SortOrder
     passingScore?: SortOrder
     totalPoints?: SortOrder
     timeLimit?: SortOrder
@@ -10405,6 +12907,119 @@ export namespace Prisma {
     timeLimit?: SortOrder
     categoryId?: SortOrder
     creatorId?: SortOrder
+  }
+
+  export type EnumLanguageFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
+    in?: $Enums.Language[]
+    notIn?: $Enums.Language[]
+    not?: NestedEnumLanguageFilter<$PrismaModel> | $Enums.Language
+  }
+
+  export type QuizScalarRelationFilter = {
+    is?: QuizWhereInput
+    isNot?: QuizWhereInput
+  }
+
+  export type QuizTranslationOrderByRelevanceInput = {
+    fields: QuizTranslationOrderByRelevanceFieldEnum | QuizTranslationOrderByRelevanceFieldEnum[]
+    sort: SortOrder
+    search: string
+  }
+
+  export type QuizTranslationQuizIdLanguageCompoundUniqueInput = {
+    quizId: number
+    language: $Enums.Language
+  }
+
+  export type QuizTranslationCountOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    language?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizTranslationAvgOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type QuizTranslationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    language?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizTranslationMinOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    language?: SortOrder
+    title?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type QuizTranslationSumOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+  }
+
+  export type EnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
+    in?: $Enums.Language[]
+    notIn?: $Enums.Language[]
+    not?: NestedEnumLanguageWithAggregatesFilter<$PrismaModel> | $Enums.Language
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLanguageFilter<$PrismaModel>
+    _max?: NestedEnumLanguageFilter<$PrismaModel>
+  }
+
+  export type QuestionTranslationListRelationFilter = {
+    every?: QuestionTranslationWhereInput
+    some?: QuestionTranslationWhereInput
+    none?: QuestionTranslationWhereInput
+  }
+
+  export type QuestionTranslationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QuestionCountOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    correctAnswerIndex?: SortOrder
+  }
+
+  export type QuestionAvgOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    correctAnswerIndex?: SortOrder
+  }
+
+  export type QuestionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    correctAnswerIndex?: SortOrder
+  }
+
+  export type QuestionMinOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    correctAnswerIndex?: SortOrder
+  }
+
+  export type QuestionSumOrderByAggregateInput = {
+    id?: SortOrder
+    quizId?: SortOrder
+    correctAnswerIndex?: SortOrder
   }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -10430,52 +13045,61 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
-  export type QuizScalarRelationFilter = {
-    is?: QuizWhereInput
-    isNot?: QuizWhereInput
+  export type QuestionScalarRelationFilter = {
+    is?: QuestionWhereInput
+    isNot?: QuestionWhereInput
   }
 
-  export type QuestionOrderByRelevanceInput = {
-    fields: QuestionOrderByRelevanceFieldEnum | QuestionOrderByRelevanceFieldEnum[]
+  export type QuestionTranslationOrderByRelevanceInput = {
+    fields: QuestionTranslationOrderByRelevanceFieldEnum | QuestionTranslationOrderByRelevanceFieldEnum[]
     sort: SortOrder
     search: string
   }
 
-  export type QuestionCountOrderByAggregateInput = {
+  export type QuestionTranslationQuestionIdLanguageCompoundUniqueInput = {
+    questionId: number
+    language: $Enums.Language
+  }
+
+  export type QuestionTranslationCountOrderByAggregateInput = {
     id?: SortOrder
-    quizId?: SortOrder
+    questionId?: SortOrder
+    language?: SortOrder
     questionText?: SortOrder
     options?: SortOrder
-    correctAnswerIndex?: SortOrder
     explanation?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type QuestionAvgOrderByAggregateInput = {
+  export type QuestionTranslationAvgOrderByAggregateInput = {
     id?: SortOrder
-    quizId?: SortOrder
-    correctAnswerIndex?: SortOrder
+    questionId?: SortOrder
   }
 
-  export type QuestionMaxOrderByAggregateInput = {
+  export type QuestionTranslationMaxOrderByAggregateInput = {
     id?: SortOrder
-    quizId?: SortOrder
+    questionId?: SortOrder
+    language?: SortOrder
     questionText?: SortOrder
-    correctAnswerIndex?: SortOrder
     explanation?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type QuestionMinOrderByAggregateInput = {
+  export type QuestionTranslationMinOrderByAggregateInput = {
     id?: SortOrder
-    quizId?: SortOrder
+    questionId?: SortOrder
+    language?: SortOrder
     questionText?: SortOrder
-    correctAnswerIndex?: SortOrder
     explanation?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
-  export type QuestionSumOrderByAggregateInput = {
+  export type QuestionTranslationSumOrderByAggregateInput = {
     id?: SortOrder
-    quizId?: SortOrder
-    correctAnswerIndex?: SortOrder
+    questionId?: SortOrder
   }
   export type JsonWithAggregatesFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -10933,6 +13557,13 @@ export namespace Prisma {
     connect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
   }
 
+  export type QuizTranslationCreateNestedManyWithoutQuizInput = {
+    create?: XOR<QuizTranslationCreateWithoutQuizInput, QuizTranslationUncheckedCreateWithoutQuizInput> | QuizTranslationCreateWithoutQuizInput[] | QuizTranslationUncheckedCreateWithoutQuizInput[]
+    connectOrCreate?: QuizTranslationCreateOrConnectWithoutQuizInput | QuizTranslationCreateOrConnectWithoutQuizInput[]
+    createMany?: QuizTranslationCreateManyQuizInputEnvelope
+    connect?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+  }
+
   export type CertificateCreateNestedManyWithoutQuizInput = {
     create?: XOR<CertificateCreateWithoutQuizInput, CertificateUncheckedCreateWithoutQuizInput> | CertificateCreateWithoutQuizInput[] | CertificateUncheckedCreateWithoutQuizInput[]
     connectOrCreate?: CertificateCreateOrConnectWithoutQuizInput | CertificateCreateOrConnectWithoutQuizInput[]
@@ -10945,6 +13576,13 @@ export namespace Prisma {
     connectOrCreate?: QuestionCreateOrConnectWithoutQuizInput | QuestionCreateOrConnectWithoutQuizInput[]
     createMany?: QuestionCreateManyQuizInputEnvelope
     connect?: QuestionWhereUniqueInput | QuestionWhereUniqueInput[]
+  }
+
+  export type QuizTranslationUncheckedCreateNestedManyWithoutQuizInput = {
+    create?: XOR<QuizTranslationCreateWithoutQuizInput, QuizTranslationUncheckedCreateWithoutQuizInput> | QuizTranslationCreateWithoutQuizInput[] | QuizTranslationUncheckedCreateWithoutQuizInput[]
+    connectOrCreate?: QuizTranslationCreateOrConnectWithoutQuizInput | QuizTranslationCreateOrConnectWithoutQuizInput[]
+    createMany?: QuizTranslationCreateManyQuizInputEnvelope
+    connect?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
   }
 
   export type CertificateUncheckedCreateNestedManyWithoutQuizInput = {
@@ -10986,6 +13624,20 @@ export namespace Prisma {
     deleteMany?: QuestionScalarWhereInput | QuestionScalarWhereInput[]
   }
 
+  export type QuizTranslationUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<QuizTranslationCreateWithoutQuizInput, QuizTranslationUncheckedCreateWithoutQuizInput> | QuizTranslationCreateWithoutQuizInput[] | QuizTranslationUncheckedCreateWithoutQuizInput[]
+    connectOrCreate?: QuizTranslationCreateOrConnectWithoutQuizInput | QuizTranslationCreateOrConnectWithoutQuizInput[]
+    upsert?: QuizTranslationUpsertWithWhereUniqueWithoutQuizInput | QuizTranslationUpsertWithWhereUniqueWithoutQuizInput[]
+    createMany?: QuizTranslationCreateManyQuizInputEnvelope
+    set?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+    disconnect?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+    delete?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+    connect?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+    update?: QuizTranslationUpdateWithWhereUniqueWithoutQuizInput | QuizTranslationUpdateWithWhereUniqueWithoutQuizInput[]
+    updateMany?: QuizTranslationUpdateManyWithWhereWithoutQuizInput | QuizTranslationUpdateManyWithWhereWithoutQuizInput[]
+    deleteMany?: QuizTranslationScalarWhereInput | QuizTranslationScalarWhereInput[]
+  }
+
   export type CertificateUpdateManyWithoutQuizNestedInput = {
     create?: XOR<CertificateCreateWithoutQuizInput, CertificateUncheckedCreateWithoutQuizInput> | CertificateCreateWithoutQuizInput[] | CertificateUncheckedCreateWithoutQuizInput[]
     connectOrCreate?: CertificateCreateOrConnectWithoutQuizInput | CertificateCreateOrConnectWithoutQuizInput[]
@@ -11014,6 +13666,20 @@ export namespace Prisma {
     deleteMany?: QuestionScalarWhereInput | QuestionScalarWhereInput[]
   }
 
+  export type QuizTranslationUncheckedUpdateManyWithoutQuizNestedInput = {
+    create?: XOR<QuizTranslationCreateWithoutQuizInput, QuizTranslationUncheckedCreateWithoutQuizInput> | QuizTranslationCreateWithoutQuizInput[] | QuizTranslationUncheckedCreateWithoutQuizInput[]
+    connectOrCreate?: QuizTranslationCreateOrConnectWithoutQuizInput | QuizTranslationCreateOrConnectWithoutQuizInput[]
+    upsert?: QuizTranslationUpsertWithWhereUniqueWithoutQuizInput | QuizTranslationUpsertWithWhereUniqueWithoutQuizInput[]
+    createMany?: QuizTranslationCreateManyQuizInputEnvelope
+    set?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+    disconnect?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+    delete?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+    connect?: QuizTranslationWhereUniqueInput | QuizTranslationWhereUniqueInput[]
+    update?: QuizTranslationUpdateWithWhereUniqueWithoutQuizInput | QuizTranslationUpdateWithWhereUniqueWithoutQuizInput[]
+    updateMany?: QuizTranslationUpdateManyWithWhereWithoutQuizInput | QuizTranslationUpdateManyWithWhereWithoutQuizInput[]
+    deleteMany?: QuizTranslationScalarWhereInput | QuizTranslationScalarWhereInput[]
+  }
+
   export type CertificateUncheckedUpdateManyWithoutQuizNestedInput = {
     create?: XOR<CertificateCreateWithoutQuizInput, CertificateUncheckedCreateWithoutQuizInput> | CertificateCreateWithoutQuizInput[] | CertificateUncheckedCreateWithoutQuizInput[]
     connectOrCreate?: CertificateCreateOrConnectWithoutQuizInput | CertificateCreateOrConnectWithoutQuizInput[]
@@ -11028,10 +13694,42 @@ export namespace Prisma {
     deleteMany?: CertificateScalarWhereInput | CertificateScalarWhereInput[]
   }
 
+  export type QuizCreateNestedOneWithoutTranslationsInput = {
+    create?: XOR<QuizCreateWithoutTranslationsInput, QuizUncheckedCreateWithoutTranslationsInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutTranslationsInput
+    connect?: QuizWhereUniqueInput
+  }
+
+  export type EnumLanguageFieldUpdateOperationsInput = {
+    set?: $Enums.Language
+  }
+
+  export type QuizUpdateOneRequiredWithoutTranslationsNestedInput = {
+    create?: XOR<QuizCreateWithoutTranslationsInput, QuizUncheckedCreateWithoutTranslationsInput>
+    connectOrCreate?: QuizCreateOrConnectWithoutTranslationsInput
+    upsert?: QuizUpsertWithoutTranslationsInput
+    connect?: QuizWhereUniqueInput
+    update?: XOR<XOR<QuizUpdateToOneWithWhereWithoutTranslationsInput, QuizUpdateWithoutTranslationsInput>, QuizUncheckedUpdateWithoutTranslationsInput>
+  }
+
   export type QuizCreateNestedOneWithoutQuestionsInput = {
     create?: XOR<QuizCreateWithoutQuestionsInput, QuizUncheckedCreateWithoutQuestionsInput>
     connectOrCreate?: QuizCreateOrConnectWithoutQuestionsInput
     connect?: QuizWhereUniqueInput
+  }
+
+  export type QuestionTranslationCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<QuestionTranslationCreateWithoutQuestionInput, QuestionTranslationUncheckedCreateWithoutQuestionInput> | QuestionTranslationCreateWithoutQuestionInput[] | QuestionTranslationUncheckedCreateWithoutQuestionInput[]
+    connectOrCreate?: QuestionTranslationCreateOrConnectWithoutQuestionInput | QuestionTranslationCreateOrConnectWithoutQuestionInput[]
+    createMany?: QuestionTranslationCreateManyQuestionInputEnvelope
+    connect?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+  }
+
+  export type QuestionTranslationUncheckedCreateNestedManyWithoutQuestionInput = {
+    create?: XOR<QuestionTranslationCreateWithoutQuestionInput, QuestionTranslationUncheckedCreateWithoutQuestionInput> | QuestionTranslationCreateWithoutQuestionInput[] | QuestionTranslationUncheckedCreateWithoutQuestionInput[]
+    connectOrCreate?: QuestionTranslationCreateOrConnectWithoutQuestionInput | QuestionTranslationCreateOrConnectWithoutQuestionInput[]
+    createMany?: QuestionTranslationCreateManyQuestionInputEnvelope
+    connect?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
   }
 
   export type QuizUpdateOneRequiredWithoutQuestionsNestedInput = {
@@ -11040,6 +13738,48 @@ export namespace Prisma {
     upsert?: QuizUpsertWithoutQuestionsInput
     connect?: QuizWhereUniqueInput
     update?: XOR<XOR<QuizUpdateToOneWithWhereWithoutQuestionsInput, QuizUpdateWithoutQuestionsInput>, QuizUncheckedUpdateWithoutQuestionsInput>
+  }
+
+  export type QuestionTranslationUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<QuestionTranslationCreateWithoutQuestionInput, QuestionTranslationUncheckedCreateWithoutQuestionInput> | QuestionTranslationCreateWithoutQuestionInput[] | QuestionTranslationUncheckedCreateWithoutQuestionInput[]
+    connectOrCreate?: QuestionTranslationCreateOrConnectWithoutQuestionInput | QuestionTranslationCreateOrConnectWithoutQuestionInput[]
+    upsert?: QuestionTranslationUpsertWithWhereUniqueWithoutQuestionInput | QuestionTranslationUpsertWithWhereUniqueWithoutQuestionInput[]
+    createMany?: QuestionTranslationCreateManyQuestionInputEnvelope
+    set?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+    disconnect?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+    delete?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+    connect?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+    update?: QuestionTranslationUpdateWithWhereUniqueWithoutQuestionInput | QuestionTranslationUpdateWithWhereUniqueWithoutQuestionInput[]
+    updateMany?: QuestionTranslationUpdateManyWithWhereWithoutQuestionInput | QuestionTranslationUpdateManyWithWhereWithoutQuestionInput[]
+    deleteMany?: QuestionTranslationScalarWhereInput | QuestionTranslationScalarWhereInput[]
+  }
+
+  export type QuestionTranslationUncheckedUpdateManyWithoutQuestionNestedInput = {
+    create?: XOR<QuestionTranslationCreateWithoutQuestionInput, QuestionTranslationUncheckedCreateWithoutQuestionInput> | QuestionTranslationCreateWithoutQuestionInput[] | QuestionTranslationUncheckedCreateWithoutQuestionInput[]
+    connectOrCreate?: QuestionTranslationCreateOrConnectWithoutQuestionInput | QuestionTranslationCreateOrConnectWithoutQuestionInput[]
+    upsert?: QuestionTranslationUpsertWithWhereUniqueWithoutQuestionInput | QuestionTranslationUpsertWithWhereUniqueWithoutQuestionInput[]
+    createMany?: QuestionTranslationCreateManyQuestionInputEnvelope
+    set?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+    disconnect?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+    delete?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+    connect?: QuestionTranslationWhereUniqueInput | QuestionTranslationWhereUniqueInput[]
+    update?: QuestionTranslationUpdateWithWhereUniqueWithoutQuestionInput | QuestionTranslationUpdateWithWhereUniqueWithoutQuestionInput[]
+    updateMany?: QuestionTranslationUpdateManyWithWhereWithoutQuestionInput | QuestionTranslationUpdateManyWithWhereWithoutQuestionInput[]
+    deleteMany?: QuestionTranslationScalarWhereInput | QuestionTranslationScalarWhereInput[]
+  }
+
+  export type QuestionCreateNestedOneWithoutTranslationsInput = {
+    create?: XOR<QuestionCreateWithoutTranslationsInput, QuestionUncheckedCreateWithoutTranslationsInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutTranslationsInput
+    connect?: QuestionWhereUniqueInput
+  }
+
+  export type QuestionUpdateOneRequiredWithoutTranslationsNestedInput = {
+    create?: XOR<QuestionCreateWithoutTranslationsInput, QuestionUncheckedCreateWithoutTranslationsInput>
+    connectOrCreate?: QuestionCreateOrConnectWithoutTranslationsInput
+    upsert?: QuestionUpsertWithoutTranslationsInput
+    connect?: QuestionWhereUniqueInput
+    update?: XOR<XOR<QuestionUpdateToOneWithWhereWithoutTranslationsInput, QuestionUpdateWithoutTranslationsInput>, QuestionUncheckedUpdateWithoutTranslationsInput>
   }
 
   export type UserCreateNestedOneWithoutCertificatesInput = {
@@ -11307,6 +14047,23 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+
+  export type NestedEnumLanguageFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
+    in?: $Enums.Language[]
+    notIn?: $Enums.Language[]
+    not?: NestedEnumLanguageFilter<$PrismaModel> | $Enums.Language
+  }
+
+  export type NestedEnumLanguageWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Language | EnumLanguageFieldRefInput<$PrismaModel>
+    in?: $Enums.Language[]
+    notIn?: $Enums.Language[]
+    not?: NestedEnumLanguageWithAggregatesFilter<$PrismaModel> | $Enums.Language
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumLanguageFilter<$PrismaModel>
+    _max?: NestedEnumLanguageFilter<$PrismaModel>
+  }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -11348,7 +14105,6 @@ export namespace Prisma {
   }
 
   export type QuizCreateWithoutCreatorInput = {
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -11356,12 +14112,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     category: TestCategoryCreateNestedOneWithoutQuizzesInput
     questions?: QuestionCreateNestedManyWithoutQuizInput
+    translations?: QuizTranslationCreateNestedManyWithoutQuizInput
     certificates?: CertificateCreateNestedManyWithoutQuizInput
   }
 
   export type QuizUncheckedCreateWithoutCreatorInput = {
     id?: number
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -11369,6 +14125,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
+    translations?: QuizTranslationUncheckedCreateNestedManyWithoutQuizInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
   }
 
@@ -11466,7 +14223,6 @@ export namespace Prisma {
     OR?: QuizScalarWhereInput[]
     NOT?: QuizScalarWhereInput | QuizScalarWhereInput[]
     id?: IntFilter<"Quiz"> | number
-    title?: StringFilter<"Quiz"> | string
     passingScore?: IntFilter<"Quiz"> | number
     totalPoints?: IntFilter<"Quiz"> | number
     timeLimit?: IntNullableFilter<"Quiz"> | number | null
@@ -11546,7 +14302,6 @@ export namespace Prisma {
   }
 
   export type QuizCreateWithoutCategoryInput = {
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -11554,12 +14309,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
     questions?: QuestionCreateNestedManyWithoutQuizInput
+    translations?: QuizTranslationCreateNestedManyWithoutQuizInput
     certificates?: CertificateCreateNestedManyWithoutQuizInput
   }
 
   export type QuizUncheckedCreateWithoutCategoryInput = {
     id?: number
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -11567,6 +14322,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
+    translations?: QuizTranslationUncheckedCreateNestedManyWithoutQuizInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
   }
 
@@ -11696,18 +14452,14 @@ export namespace Prisma {
   }
 
   export type QuestionCreateWithoutQuizInput = {
-    questionText: string
-    options: JsonNullValueInput | InputJsonValue
     correctAnswerIndex: number
-    explanation?: string | null
+    translations?: QuestionTranslationCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionUncheckedCreateWithoutQuizInput = {
     id?: number
-    questionText: string
-    options: JsonNullValueInput | InputJsonValue
     correctAnswerIndex: number
-    explanation?: string | null
+    translations?: QuestionTranslationUncheckedCreateNestedManyWithoutQuestionInput
   }
 
   export type QuestionCreateOrConnectWithoutQuizInput = {
@@ -11717,6 +14469,33 @@ export namespace Prisma {
 
   export type QuestionCreateManyQuizInputEnvelope = {
     data: QuestionCreateManyQuizInput | QuestionCreateManyQuizInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type QuizTranslationCreateWithoutQuizInput = {
+    language: $Enums.Language
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizTranslationUncheckedCreateWithoutQuizInput = {
+    id?: number
+    language: $Enums.Language
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuizTranslationCreateOrConnectWithoutQuizInput = {
+    where: QuizTranslationWhereUniqueInput
+    create: XOR<QuizTranslationCreateWithoutQuizInput, QuizTranslationUncheckedCreateWithoutQuizInput>
+  }
+
+  export type QuizTranslationCreateManyQuizInputEnvelope = {
+    data: QuizTranslationCreateManyQuizInput | QuizTranslationCreateManyQuizInput[]
     skipDuplicates?: boolean
   }
 
@@ -11837,10 +14616,36 @@ export namespace Prisma {
     NOT?: QuestionScalarWhereInput | QuestionScalarWhereInput[]
     id?: IntFilter<"Question"> | number
     quizId?: IntFilter<"Question"> | number
-    questionText?: StringFilter<"Question"> | string
-    options?: JsonFilter<"Question">
     correctAnswerIndex?: IntFilter<"Question"> | number
-    explanation?: StringNullableFilter<"Question"> | string | null
+  }
+
+  export type QuizTranslationUpsertWithWhereUniqueWithoutQuizInput = {
+    where: QuizTranslationWhereUniqueInput
+    update: XOR<QuizTranslationUpdateWithoutQuizInput, QuizTranslationUncheckedUpdateWithoutQuizInput>
+    create: XOR<QuizTranslationCreateWithoutQuizInput, QuizTranslationUncheckedCreateWithoutQuizInput>
+  }
+
+  export type QuizTranslationUpdateWithWhereUniqueWithoutQuizInput = {
+    where: QuizTranslationWhereUniqueInput
+    data: XOR<QuizTranslationUpdateWithoutQuizInput, QuizTranslationUncheckedUpdateWithoutQuizInput>
+  }
+
+  export type QuizTranslationUpdateManyWithWhereWithoutQuizInput = {
+    where: QuizTranslationScalarWhereInput
+    data: XOR<QuizTranslationUpdateManyMutationInput, QuizTranslationUncheckedUpdateManyWithoutQuizInput>
+  }
+
+  export type QuizTranslationScalarWhereInput = {
+    AND?: QuizTranslationScalarWhereInput | QuizTranslationScalarWhereInput[]
+    OR?: QuizTranslationScalarWhereInput[]
+    NOT?: QuizTranslationScalarWhereInput | QuizTranslationScalarWhereInput[]
+    id?: IntFilter<"QuizTranslation"> | number
+    quizId?: IntFilter<"QuizTranslation"> | number
+    language?: EnumLanguageFilter<"QuizTranslation"> | $Enums.Language
+    title?: StringFilter<"QuizTranslation"> | string
+    description?: StringNullableFilter<"QuizTranslation"> | string | null
+    createdAt?: DateTimeFilter<"QuizTranslation"> | Date | string
+    updatedAt?: DateTimeFilter<"QuizTranslation"> | Date | string
   }
 
   export type CertificateUpsertWithWhereUniqueWithoutQuizInput = {
@@ -11859,8 +14664,7 @@ export namespace Prisma {
     data: XOR<CertificateUpdateManyMutationInput, CertificateUncheckedUpdateManyWithoutQuizInput>
   }
 
-  export type QuizCreateWithoutQuestionsInput = {
-    title: string
+  export type QuizCreateWithoutTranslationsInput = {
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -11868,12 +14672,12 @@ export namespace Prisma {
     updatedAt?: Date | string
     category: TestCategoryCreateNestedOneWithoutQuizzesInput
     creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
+    questions?: QuestionCreateNestedManyWithoutQuizInput
     certificates?: CertificateCreateNestedManyWithoutQuizInput
   }
 
-  export type QuizUncheckedCreateWithoutQuestionsInput = {
+  export type QuizUncheckedCreateWithoutTranslationsInput = {
     id?: number
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -11881,12 +14685,108 @@ export namespace Prisma {
     creatorId?: number | null
     createdAt?: Date | string
     updatedAt?: Date | string
+    questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
+    certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
+  }
+
+  export type QuizCreateOrConnectWithoutTranslationsInput = {
+    where: QuizWhereUniqueInput
+    create: XOR<QuizCreateWithoutTranslationsInput, QuizUncheckedCreateWithoutTranslationsInput>
+  }
+
+  export type QuizUpsertWithoutTranslationsInput = {
+    update: XOR<QuizUpdateWithoutTranslationsInput, QuizUncheckedUpdateWithoutTranslationsInput>
+    create: XOR<QuizCreateWithoutTranslationsInput, QuizUncheckedCreateWithoutTranslationsInput>
+    where?: QuizWhereInput
+  }
+
+  export type QuizUpdateToOneWithWhereWithoutTranslationsInput = {
+    where?: QuizWhereInput
+    data: XOR<QuizUpdateWithoutTranslationsInput, QuizUncheckedUpdateWithoutTranslationsInput>
+  }
+
+  export type QuizUpdateWithoutTranslationsInput = {
+    passingScore?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
+    creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
+    questions?: QuestionUpdateManyWithoutQuizNestedInput
+    certificates?: CertificateUpdateManyWithoutQuizNestedInput
+  }
+
+  export type QuizUncheckedUpdateWithoutTranslationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    passingScore?: IntFieldUpdateOperationsInput | number
+    totalPoints?: IntFieldUpdateOperationsInput | number
+    timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
+    categoryId?: IntFieldUpdateOperationsInput | number
+    creatorId?: NullableIntFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
+    certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
+  }
+
+  export type QuizCreateWithoutQuestionsInput = {
+    passingScore?: number
+    totalPoints: number
+    timeLimit?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category: TestCategoryCreateNestedOneWithoutQuizzesInput
+    creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
+    translations?: QuizTranslationCreateNestedManyWithoutQuizInput
+    certificates?: CertificateCreateNestedManyWithoutQuizInput
+  }
+
+  export type QuizUncheckedCreateWithoutQuestionsInput = {
+    id?: number
+    passingScore?: number
+    totalPoints: number
+    timeLimit?: number | null
+    categoryId: number
+    creatorId?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    translations?: QuizTranslationUncheckedCreateNestedManyWithoutQuizInput
     certificates?: CertificateUncheckedCreateNestedManyWithoutQuizInput
   }
 
   export type QuizCreateOrConnectWithoutQuestionsInput = {
     where: QuizWhereUniqueInput
     create: XOR<QuizCreateWithoutQuestionsInput, QuizUncheckedCreateWithoutQuestionsInput>
+  }
+
+  export type QuestionTranslationCreateWithoutQuestionInput = {
+    language: $Enums.Language
+    questionText: string
+    options: JsonNullValueInput | InputJsonValue
+    explanation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuestionTranslationUncheckedCreateWithoutQuestionInput = {
+    id?: number
+    language: $Enums.Language
+    questionText: string
+    options: JsonNullValueInput | InputJsonValue
+    explanation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuestionTranslationCreateOrConnectWithoutQuestionInput = {
+    where: QuestionTranslationWhereUniqueInput
+    create: XOR<QuestionTranslationCreateWithoutQuestionInput, QuestionTranslationUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type QuestionTranslationCreateManyQuestionInputEnvelope = {
+    data: QuestionTranslationCreateManyQuestionInput | QuestionTranslationCreateManyQuestionInput[]
+    skipDuplicates?: boolean
   }
 
   export type QuizUpsertWithoutQuestionsInput = {
@@ -11901,7 +14801,6 @@ export namespace Prisma {
   }
 
   export type QuizUpdateWithoutQuestionsInput = {
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11909,12 +14808,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
     creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
+    translations?: QuizTranslationUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutQuestionsInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -11922,7 +14821,76 @@ export namespace Prisma {
     creatorId?: NullableIntFieldUpdateOperationsInput | number | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    translations?: QuizTranslationUncheckedUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
+  }
+
+  export type QuestionTranslationUpsertWithWhereUniqueWithoutQuestionInput = {
+    where: QuestionTranslationWhereUniqueInput
+    update: XOR<QuestionTranslationUpdateWithoutQuestionInput, QuestionTranslationUncheckedUpdateWithoutQuestionInput>
+    create: XOR<QuestionTranslationCreateWithoutQuestionInput, QuestionTranslationUncheckedCreateWithoutQuestionInput>
+  }
+
+  export type QuestionTranslationUpdateWithWhereUniqueWithoutQuestionInput = {
+    where: QuestionTranslationWhereUniqueInput
+    data: XOR<QuestionTranslationUpdateWithoutQuestionInput, QuestionTranslationUncheckedUpdateWithoutQuestionInput>
+  }
+
+  export type QuestionTranslationUpdateManyWithWhereWithoutQuestionInput = {
+    where: QuestionTranslationScalarWhereInput
+    data: XOR<QuestionTranslationUpdateManyMutationInput, QuestionTranslationUncheckedUpdateManyWithoutQuestionInput>
+  }
+
+  export type QuestionTranslationScalarWhereInput = {
+    AND?: QuestionTranslationScalarWhereInput | QuestionTranslationScalarWhereInput[]
+    OR?: QuestionTranslationScalarWhereInput[]
+    NOT?: QuestionTranslationScalarWhereInput | QuestionTranslationScalarWhereInput[]
+    id?: IntFilter<"QuestionTranslation"> | number
+    questionId?: IntFilter<"QuestionTranslation"> | number
+    language?: EnumLanguageFilter<"QuestionTranslation"> | $Enums.Language
+    questionText?: StringFilter<"QuestionTranslation"> | string
+    options?: JsonFilter<"QuestionTranslation">
+    explanation?: StringNullableFilter<"QuestionTranslation"> | string | null
+    createdAt?: DateTimeFilter<"QuestionTranslation"> | Date | string
+    updatedAt?: DateTimeFilter<"QuestionTranslation"> | Date | string
+  }
+
+  export type QuestionCreateWithoutTranslationsInput = {
+    correctAnswerIndex: number
+    quiz: QuizCreateNestedOneWithoutQuestionsInput
+  }
+
+  export type QuestionUncheckedCreateWithoutTranslationsInput = {
+    id?: number
+    quizId: number
+    correctAnswerIndex: number
+  }
+
+  export type QuestionCreateOrConnectWithoutTranslationsInput = {
+    where: QuestionWhereUniqueInput
+    create: XOR<QuestionCreateWithoutTranslationsInput, QuestionUncheckedCreateWithoutTranslationsInput>
+  }
+
+  export type QuestionUpsertWithoutTranslationsInput = {
+    update: XOR<QuestionUpdateWithoutTranslationsInput, QuestionUncheckedUpdateWithoutTranslationsInput>
+    create: XOR<QuestionCreateWithoutTranslationsInput, QuestionUncheckedCreateWithoutTranslationsInput>
+    where?: QuestionWhereInput
+  }
+
+  export type QuestionUpdateToOneWithWhereWithoutTranslationsInput = {
+    where?: QuestionWhereInput
+    data: XOR<QuestionUpdateWithoutTranslationsInput, QuestionUncheckedUpdateWithoutTranslationsInput>
+  }
+
+  export type QuestionUpdateWithoutTranslationsInput = {
+    correctAnswerIndex?: IntFieldUpdateOperationsInput | number
+    quiz?: QuizUpdateOneRequiredWithoutQuestionsNestedInput
+  }
+
+  export type QuestionUncheckedUpdateWithoutTranslationsInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    quizId?: IntFieldUpdateOperationsInput | number
+    correctAnswerIndex?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserCreateWithoutCertificatesInput = {
@@ -11978,7 +14946,6 @@ export namespace Prisma {
   }
 
   export type QuizCreateWithoutCertificatesInput = {
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -11987,11 +14954,11 @@ export namespace Prisma {
     category: TestCategoryCreateNestedOneWithoutQuizzesInput
     creator?: UserCreateNestedOneWithoutCreatedQuizzesInput
     questions?: QuestionCreateNestedManyWithoutQuizInput
+    translations?: QuizTranslationCreateNestedManyWithoutQuizInput
   }
 
   export type QuizUncheckedCreateWithoutCertificatesInput = {
     id?: number
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -12000,6 +14967,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     questions?: QuestionUncheckedCreateNestedManyWithoutQuizInput
+    translations?: QuizTranslationUncheckedCreateNestedManyWithoutQuizInput
   }
 
   export type QuizCreateOrConnectWithoutCertificatesInput = {
@@ -12083,7 +15051,6 @@ export namespace Prisma {
   }
 
   export type QuizUpdateWithoutCertificatesInput = {
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12092,11 +15059,11 @@ export namespace Prisma {
     category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
     creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
     questions?: QuestionUpdateManyWithoutQuizNestedInput
+    translations?: QuizTranslationUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutCertificatesInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12105,6 +15072,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
+    translations?: QuizTranslationUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type UserCreateWithoutPaymentInput = {
@@ -12175,7 +15143,6 @@ export namespace Prisma {
 
   export type QuizCreateManyCreatorInput = {
     id?: number
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -12196,7 +15163,6 @@ export namespace Prisma {
   }
 
   export type QuizUpdateWithoutCreatorInput = {
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12204,12 +15170,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: TestCategoryUpdateOneRequiredWithoutQuizzesNestedInput
     questions?: QuestionUpdateManyWithoutQuizNestedInput
+    translations?: QuizTranslationUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutCreatorInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12217,12 +15183,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
+    translations?: QuizTranslationUncheckedUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateManyWithoutCreatorInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12265,7 +15231,6 @@ export namespace Prisma {
 
   export type QuizCreateManyCategoryInput = {
     id?: number
-    title: string
     passingScore?: number
     totalPoints: number
     timeLimit?: number | null
@@ -12286,7 +15251,6 @@ export namespace Prisma {
   }
 
   export type QuizUpdateWithoutCategoryInput = {
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12294,12 +15258,12 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneWithoutCreatedQuizzesNestedInput
     questions?: QuestionUpdateManyWithoutQuizNestedInput
+    translations?: QuizTranslationUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12307,12 +15271,12 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     questions?: QuestionUncheckedUpdateManyWithoutQuizNestedInput
+    translations?: QuizTranslationUncheckedUpdateManyWithoutQuizNestedInput
     certificates?: CertificateUncheckedUpdateManyWithoutQuizNestedInput
   }
 
   export type QuizUncheckedUpdateManyWithoutCategoryInput = {
     id?: IntFieldUpdateOperationsInput | number
-    title?: StringFieldUpdateOperationsInput | string
     passingScore?: IntFieldUpdateOperationsInput | number
     totalPoints?: IntFieldUpdateOperationsInput | number
     timeLimit?: NullableIntFieldUpdateOperationsInput | number | null
@@ -12355,10 +15319,16 @@ export namespace Prisma {
 
   export type QuestionCreateManyQuizInput = {
     id?: number
-    questionText: string
-    options: JsonNullValueInput | InputJsonValue
     correctAnswerIndex: number
-    explanation?: string | null
+  }
+
+  export type QuizTranslationCreateManyQuizInput = {
+    id?: number
+    language: $Enums.Language
+    title: string
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type CertificateCreateManyQuizInput = {
@@ -12373,26 +15343,45 @@ export namespace Prisma {
   }
 
   export type QuestionUpdateWithoutQuizInput = {
-    questionText?: StringFieldUpdateOperationsInput | string
-    options?: JsonNullValueInput | InputJsonValue
     correctAnswerIndex?: IntFieldUpdateOperationsInput | number
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    translations?: QuestionTranslationUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateWithoutQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    questionText?: StringFieldUpdateOperationsInput | string
-    options?: JsonNullValueInput | InputJsonValue
     correctAnswerIndex?: IntFieldUpdateOperationsInput | number
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    translations?: QuestionTranslationUncheckedUpdateManyWithoutQuestionNestedInput
   }
 
   export type QuestionUncheckedUpdateManyWithoutQuizInput = {
     id?: IntFieldUpdateOperationsInput | number
-    questionText?: StringFieldUpdateOperationsInput | string
-    options?: JsonNullValueInput | InputJsonValue
     correctAnswerIndex?: IntFieldUpdateOperationsInput | number
-    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type QuizTranslationUpdateWithoutQuizInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizTranslationUncheckedUpdateWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuizTranslationUncheckedUpdateManyWithoutQuizInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type CertificateUpdateWithoutQuizInput = {
@@ -12423,6 +15412,45 @@ export namespace Prisma {
     score?: FloatFieldUpdateOperationsInput | number
     issueDate?: DateTimeFieldUpdateOperationsInput | Date | string
     certificateID?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionTranslationCreateManyQuestionInput = {
+    id?: number
+    language: $Enums.Language
+    questionText: string
+    options: JsonNullValueInput | InputJsonValue
+    explanation?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuestionTranslationUpdateWithoutQuestionInput = {
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    questionText?: StringFieldUpdateOperationsInput | string
+    options?: JsonNullValueInput | InputJsonValue
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionTranslationUncheckedUpdateWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    questionText?: StringFieldUpdateOperationsInput | string
+    options?: JsonNullValueInput | InputJsonValue
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuestionTranslationUncheckedUpdateManyWithoutQuestionInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    language?: EnumLanguageFieldUpdateOperationsInput | $Enums.Language
+    questionText?: StringFieldUpdateOperationsInput | string
+    options?: JsonNullValueInput | InputJsonValue
+    explanation?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

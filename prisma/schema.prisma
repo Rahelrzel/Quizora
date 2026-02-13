@@ -30,6 +30,14 @@
     admin
   }
 
+  enum Language {
+    en
+    fr
+    es
+    de
+    ar
+  }
+
   model TestCategory {
     id           Int           @id @default(autoincrement())
     name         String        @unique
@@ -43,33 +51,60 @@
   }
 
   model Quiz {
-    id           Int           @id @default(autoincrement())
-    title        String
-    passingScore Int           @default(70)
+    id           Int               @id @default(autoincrement())
+    passingScore Int               @default(70)
     totalPoints  Int
     timeLimit    Int?
     categoryId   Int
-    category     TestCategory  @relation(fields: [categoryId], references: [id])
+    category     TestCategory      @relation(fields: [categoryId], references: [id])
     creatorId    Int?
-    creator      User?         @relation("UserCreations", fields: [creatorId], references: [id])
+    creator      User?             @relation("UserCreations", fields: [creatorId], references: [id])
     questions    Question[]
+    translations QuizTranslation[]
     certificates Certificate[]
-    createdAt    DateTime      @default(now())
-    updatedAt    DateTime      @updatedAt
+    createdAt    DateTime          @default(now())
+    updatedAt    DateTime          @updatedAt
 
     @@map("quizzes")
   }
 
+  model QuizTranslation {
+    id          Int      @id @default(autoincrement())
+    quizId      Int
+    quiz        Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+    language    Language
+    title       String
+    description String?  @db.Text
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    @@unique([quizId, language])
+    @@map("quiz_translations")
+  }
+
   model Question {
-    id                 Int     @id @default(autoincrement())
+    id                 Int                   @id @default(autoincrement())
     quizId             Int
-    quiz               Quiz    @relation(fields: [quizId], references: [id], onDelete: Cascade)
-    questionText       String  @db.Text
-    options            Json
+    quiz               Quiz                  @relation(fields: [quizId], references: [id], onDelete: Cascade)
     correctAnswerIndex Int
-    explanation        String? @db.Text
+    translations       QuestionTranslation[]
 
     @@map("questions")
+  }
+
+  model QuestionTranslation {
+    id           Int      @id @default(autoincrement())
+    questionId   Int
+    question     Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+    language     Language
+    questionText String   @db.Text
+    options      Json
+    explanation  String?  @db.Text
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+
+    @@unique([questionId, language])
+    @@map("question_translations")
   }
 
   model Course {
@@ -100,6 +135,7 @@
 
     @@map("certificates")
   }
+
   model Payment {
     id               Int      @id @default(autoincrement())
     user             User?    @relation
